@@ -13,7 +13,7 @@ app_license = "MIT"
 
 # Includes in <head>
 # ------------------
-
+boot_session = "logistic_marketplace.startup.boot.boot_session"
 # include js, css files in header of desk.html
 # app_include_css = "/assets/logistic_marketplace/css/logistic_marketplace.css"
 # app_include_js = "/assets/logistic_marketplace/js/logistic_marketplace.js"
