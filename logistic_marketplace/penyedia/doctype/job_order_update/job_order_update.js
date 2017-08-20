@@ -6,3 +6,4 @@ frappe.ui.form.on('Job Order Update', {
 
 	}
 });
+cur_frm.add_fetch("job_order", "principle", "principle");
