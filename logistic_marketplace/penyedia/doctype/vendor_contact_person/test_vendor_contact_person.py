@@ -8,3 +8,4 @@ import unittest
 
 class TestVendorContactPerson(unittest.TestCase):
 	pass
+	

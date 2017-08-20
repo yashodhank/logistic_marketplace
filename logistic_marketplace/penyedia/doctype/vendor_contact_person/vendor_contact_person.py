@@ -8,3 +8,5 @@ from frappe.model.document import Document
 
 class VendorContactPerson(Document):
 	pass
+	def autoname(self):
+		self.name = self.nama + ' (' + self.vendor + ')'
