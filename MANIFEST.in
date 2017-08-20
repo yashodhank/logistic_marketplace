@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include logistic_marketplace *.css
+recursive-include logistic_marketplace *.csv
+recursive-include logistic_marketplace *.html
+recursive-include logistic_marketplace *.ico
+recursive-include logistic_marketplace *.js
+recursive-include logistic_marketplace *.json
+recursive-include logistic_marketplace *.md
+recursive-include logistic_marketplace *.png
+recursive-include logistic_marketplace *.py
+recursive-include logistic_marketplace *.svg
+recursive-include logistic_marketplace *.txt
+recursive-exclude logistic_marketplace *.pyc
