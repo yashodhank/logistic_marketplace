@@ -1,7 +1,3 @@
-Logistic
-Master Data
 Master
-Pengguna Jasa
-Penyedia Jasa
 Pengguna
 Penyedia
