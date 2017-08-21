@@ -6,7 +6,5 @@ from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
 
-class Vendor(Document):
+class Driver(Document):
 	pass
-	def validate(self):
-		#frappe.throw(self.nama)
