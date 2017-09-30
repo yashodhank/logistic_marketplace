@@ -18,6 +18,7 @@ MapLastUpdate = Class.extend({
 	},
 	setup: function(wrapper) {
 		var me = this;
+
 		this.elements = {
 			layout: $(wrapper).find(".layout-main"),
 			principle: wrapper.page.add_field({
@@ -26,6 +27,7 @@ MapLastUpdate = Class.extend({
 			"fieldtype": "Link",
 			"options": "Principle",
 			"default": frappe.defaults.get_user_default("principle"),
+			"read_ony":1,
 			"reqd": 1
 			}),
 			vendor: wrapper.page.add_field({
