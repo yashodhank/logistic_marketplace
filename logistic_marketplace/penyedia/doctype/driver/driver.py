@@ -6,8 +6,7 @@ from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
 
-class Driver(Document):
-	
+class Driver(Document):	
 	def on_update(self):
 		self.user_setup()
 	def user_setup(self):
@@ -35,6 +34,4 @@ class Driver(Document):
 				"roles":roles_to_apply
 				})
 			doc.insert()
-			
-			
-			
+

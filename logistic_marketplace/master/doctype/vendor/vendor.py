@@ -8,3 +8,5 @@ from frappe.model.document import Document
 
 class Vendor(Document):
 	pass
+	def validate(self):
+		#frappe.throw(self.nama)
