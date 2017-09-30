@@ -8,30 +8,38 @@ from frappe.model.document import Document
 
 class Driver(Document):	
 	def on_update(self):
-		self.user_setup()
-	def user_setup(self):
-		gg = frappe.db.sql("""select name from tabUser where name="{}" """.format(self.email))
-		found=0
-		for row in gg:
-			found =1
-		if found==1 :
-			if self.password:
-				#update the password
-				pass
-		else:
-			password = "asd123"
-			if self.password:
-				password = self.password
-			roles_to_apply=[{"role":"System Manager"}]
-
+		result = frappe.db.sql("""select name from `tabUser` where name="{}" """.format(self.email),as_list=1)
+		for row in result:
+			frappe.throw("Email Already Used")
+	def after_insert(self):
+		password = "asd123"
+		if self.password:
+			password = self.password
+		roles_to_apply=[{"role":"Driver"}]
 			doc = frappe.get_doc({
-				"doctype": "User",
-				"email":self.email,
-				"first_name":self.nama,
-				"send_welcome_email":0,
-				"new_password":password,
-				"send_password_update_notification":0,
-				"roles":roles_to_apply
-				})
-			doc.insert()
+			"doctype": "User",
+			"email":self.email,
+			"first_name":self.nama,
+			"send_welcome_email":0,
+			"new_password":password,
+			"send_password_update_notification":0,
+			"roles":roles_to_apply
+			})
+		doc.insert()
+		perm = frappe.get_doc({
+			"doctype": "User Permission",
+			"user":self.email,
+			"allow":"Vendor",
+			"for_value":self.vendor,
+			"apply_for_all_roles":1
+			})
+		perm.insert()
+		perm = frappe.get_doc({
+			"doctype": "User Permission",
+			"user":self.email,
+			"allow":"Driver",
+			"for_value":self.name,
+			"apply_for_all_roles":1
+			})
+		perm.insert()
 

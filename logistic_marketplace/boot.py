@@ -7,11 +7,14 @@ import frappe
 from frappe.utils.nestedset import get_root_of
 
 def boot_session(bootinfo):
-	principle = frappe.db.sql("""select name from `tabPrinciple` where user="{}" """.format(frappe.session['user']),as_dict=1)
-	for row in principle:
-		frappe.session['principle']=row['name']
-		bootinfo.sysdefaults.principle=row['name']
-	vendor = frappe.db.sql("""select name from `tabVendor` where user="{}" """.format(frappe.session['user']),as_dict=1)
-	for row in vendor:
-		frappe.session['vendor']=row['name']
-		bootinfo.sysdefaults.vendor=row['name']
+	has_role = frappe.db.sql("""select allow,for_value from `tabUser Permission` where user="{}" """.format(frappe.session['user']),as_dict=1)
+	for row in has_role:
+		if row.['allow'] == "Principle":
+			frappe.session['principle']=row['for_value']
+			bootinfo.sysdefaults.principle=row['for_value']
+		elif row.['allow'] == "Vendor":
+			frappe.session['vendor']=row['for_value']
+			bootinfo.sysdefaults.vendor=row['for_value']
+		elif row.['allow'] == "Driver":
+			frappe.session['driver']=row['for_value']
+			bootinfo.sysdefaults.driver=row['for_value']
