@@ -27,7 +27,7 @@ MapLastUpdate = Class.extend({
 			"fieldtype": "Link",
 			"options": "Principle",
 			"default": frappe.defaults.get_user_default("principle"),
-			"read_ony":1,
+			"read_only":1,
 			"reqd": 1
 			}),
 			vendor: wrapper.page.add_field({
@@ -41,7 +41,6 @@ MapLastUpdate = Class.extend({
 			refresh_btn: wrapper.page.set_primary_action(__("Refresh"),
 				function() { me.get_data(); }, "fa fa-refresh"),
 		};
-		
 	},
 	get_data: function(btn) {
 		var me = this;
