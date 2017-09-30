@@ -1,0 +1,24 @@
+{
+ "content": null, 
+ "creation": "2017-09-30 01:05:36.564181", 
+ "docstatus": 0, 
+ "doctype": "Page", 
+ "icon": "octicon-checklist", 
+ "idx": 0, 
+ "modified": "2017-09-30 01:05:43.008442", 
+ "modified_by": "Administrator", 
+ "module": "Pengguna", 
+ "name": "job-order-last-updat", 
+ "owner": "Administrator", 
+ "page_name": "Job Order Last Update Position", 
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ], 
+ "script": null, 
+ "standard": "Yes", 
+ "style": null, 
+ "system_page": 0, 
+ "title": "Job Order Last Update Position"
+}
