@@ -28,6 +28,14 @@ MapLastUpdate = Class.extend({
 			"default": frappe.defaults.get_user_default("principle"),
 			"reqd": 1
 			}),
+			vendor: wrapper.page.add_field({
+			"fieldname":"vendor",
+			"label": __("Vendor"),
+			"fieldtype": "Link",
+			"options": "Vendor",
+			"default": frappe.defaults.get_user_default("vendor"),
+			"reqd": 1
+			}),
 			refresh_btn: wrapper.page.set_primary_action(__("Refresh"),
 				function() { me.get_data(); }, "fa fa-refresh"),
 		};
@@ -38,7 +46,8 @@ MapLastUpdate = Class.extend({
 		frappe.call({
 			method: "logistic_marketplace.pengguna.page.job_order_last_updat.job_order_last_update.get_job_order_data",
 			args: {
-				principle: this.options.principle
+				principle: this.options.principle,
+				vendor: this.options.vendor
 			},
 			btn: btn,
 			callback: function(r) {
