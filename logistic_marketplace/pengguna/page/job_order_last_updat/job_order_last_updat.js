@@ -1,6 +1,7 @@
 var map;
 var bounds;
 var appgg;
+var loaded=0;
 function initMap(){
 	appgg.render();
 	bounds = new google.maps.LatLngBounds();
@@ -13,6 +14,7 @@ function initMap(){
 	// Display a map on the page
 	map = new google.maps.Map(document.getElementById("map"), mapOptions);
 	map.setTilt(45);
+	loaded=1;
 }
 frappe.pages['job-order-last-updat'].on_page_load = function(wrapper) {
 	var page = frappe.ui.make_app_page({
@@ -69,6 +71,7 @@ MapLastUpdate = Class.extend({
 				
 	},
 	get_data: function(btn) {
+		if (loaded==0){
 		var me = this;
 		frappe.call({
 			method: "logistic_marketplace.pengguna.page.job_order_last_updat.job_order_last_update.get_job_order_data",
@@ -84,8 +87,10 @@ MapLastUpdate = Class.extend({
 				}
 			}
 		});
+		}
 	},
 	render: function() {
+		if (loaded==0){
 		var me = this;
 		data = me.options.data;
 		markers = [];
@@ -127,5 +132,5 @@ MapLastUpdate = Class.extend({
 			this.setZoom(7);
 			google.maps.event.removeListener(boundsListener);
 		});
-	}
+	}}
 });
