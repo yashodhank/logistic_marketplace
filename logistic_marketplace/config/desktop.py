@@ -24,5 +24,12 @@ def get_data():
 			"icon": "octicon octicon-gist-secret",
 			"type": "module",
 			"label": _("Pengguna")
+		},
+		{
+			"name": "job-order-last-updat",
+			"color": "grey",
+			"icon": "octicon octicon-checklist",
+			"type": "page",
+			"label": _("Job Order Last Update Position")
 		}
 	]
