@@ -4,11 +4,11 @@ import frappe
 from frappe import _
 
 @frappe.whitelist()
-def get_job_order_data(filters):
+def get_job_order_data(principle,vendor):
 	where = ""
-	if filters.get("principle"):
+	if principle!="All":
 		where = """ and p.principle ="{}" """.format(principle)
-	if filters.get("vendor"):
+	if vendor!="All":
 		where = """{} and p.vendor="{}" """.format(vendor)
 	result = frappe.db.sql("""select d.job_order , d.waktu,d.status,d.lo,d.lat,p.principle ,p.vendor ,d.driver
 			from `tabJob Order Update` d 

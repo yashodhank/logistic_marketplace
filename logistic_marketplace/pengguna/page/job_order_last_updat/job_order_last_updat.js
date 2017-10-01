@@ -100,10 +100,8 @@ MapLastUpdate = Class.extend({
 		frappe.call({
 			method: "logistic_marketplace.pengguna.page.job_order_last_updat.job_order_last_update.get_job_order_data",
 			args: {
-				filter:{
 					principle: pp,
 					vendor: vv
-				}
 			},
 			btn: btn,
 			callback: function(r) {
