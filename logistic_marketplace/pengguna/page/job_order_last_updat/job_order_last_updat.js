@@ -1,6 +1,7 @@
 var map;
 var bounds;
 var appgg;
+var loaded_data=[];
 var loaded=0;
 function initMap(){
 	appgg.render();
@@ -82,7 +83,7 @@ MapLastUpdate = Class.extend({
 			btn: btn,
 			callback: function(r) {
 				if(!r.exc) {
-					me.options.data = r.message;
+					loaded_data = r.message;
 					me.render();
 				}
 			}
@@ -92,7 +93,7 @@ MapLastUpdate = Class.extend({
 	render: function() {
 		if (loaded==1){
 		var me = this;
-		data = me.options.data;
+		data = loaded_data;
 		markers = [];
 		infoWindowContent = [];
 		for (var row in data){
