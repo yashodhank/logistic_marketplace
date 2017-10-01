@@ -77,12 +77,11 @@ MapLastUpdate = Class.extend({
 			principle: frappe.defaults.get_user_default("principle"),
 			vendor: frappe.defaults.get_user_default("vendor")
 		};
-		alert(this.elements.principle.val()+"gg");
 		$.each(this.options, function(k, v) {
 			//me.elements[k].val(frappe.datetime.str_to_user(v));
-			this.elements[k].on("change", function() {
-				this.options[k] = this.elements[k].val();
-				this.get_data();
+			me.elements[k].on("change", function() {
+				me.options[k] = $(this).val();
+				me.get_data();
 			});
 		});
 		this.elements.refresh_btn.on("click", function() {
