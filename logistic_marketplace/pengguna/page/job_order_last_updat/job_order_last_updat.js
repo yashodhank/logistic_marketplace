@@ -17,8 +17,8 @@ function initMap(){
 	map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 	map.setTilt(45);
 	loaded=1;
-	me.setup(global_wrapper);
-	me.get_data();
+	appgg.setup(global_wrapper);
+	appgg.get_data();
 }
 frappe.pages['job-order-last-updat'].on_page_load = function(wrapper) {
 	var page = frappe.ui.make_app_page({
