@@ -69,6 +69,13 @@ MapLastUpdate = Class.extend({
 			refresh_btn: wrapper.page.set_primary_action(__("Refresh"),
 				function() { me.get_data(); }, "fa fa-refresh")
 		};
+		$.each(this.options, function(k, v) {
+			me.elements[k].val(frappe.datetime.str_to_user(v));
+			me.elements[k].on("change", function() {
+				me.options[k] = frappe.datetime.user_to_str($(this).val());
+				me.get_data();
+			});
+		});
 				
 	},
 	get_data: function(btn) {
