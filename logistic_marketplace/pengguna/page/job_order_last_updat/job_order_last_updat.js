@@ -121,6 +121,7 @@ MapLastUpdate = Class.extend({
 			current_markers[i].setMap(Null);
 		}
 		current_markers=[];
+		if (loaded_data.length>0){
 		var markers = [];
 		infoWindowContent = [];
 		for (var row in data){
@@ -160,5 +161,6 @@ MapLastUpdate = Class.extend({
 			this.setZoom(7);
 			google.maps.event.removeListener(boundsListener);
 		});
+	}
 	}}
 });
