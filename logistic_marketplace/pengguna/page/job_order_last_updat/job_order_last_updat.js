@@ -74,9 +74,10 @@ MapLastUpdate = Class.extend({
 			vendor: frappe.defaults.get_user_default("vendor")
 		};
 		$.each(this.options, function(k, v) {
-			me.elements[k].val(frappe.datetime.str_to_user(v));
+			//me.elements[k].val(frappe.datetime.str_to_user(v));
 			me.elements[k].on("change", function() {
-				me.options[k] = frappe.datetime.user_to_str($(this).val());
+				alert(me.elements[k].val());
+				me.options[k] = me.elements[k].val();
 				me.get_data();
 			});
 		});
