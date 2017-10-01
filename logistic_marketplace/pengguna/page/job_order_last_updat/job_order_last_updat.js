@@ -4,6 +4,7 @@ var appgg;
 var loaded_data=[];
 var loaded=0;
 var global_wrapper;
+var current_markers=[];
 function initMap(){
 	
 	bounds = new google.maps.LatLngBounds();
@@ -116,7 +117,11 @@ MapLastUpdate = Class.extend({
 		if (loaded==1){
 		var me = this;
 		data = loaded_data;
-		markers = [];
+		for( i = 0; i < current_markers.length; i++ ) {
+			current_markers[i].setMap(Null);
+		}
+		current_markers=[];
+		var markers = [];
 		infoWindowContent = [];
 		for (var row in data){
 			info = data[row];
@@ -139,7 +144,7 @@ MapLastUpdate = Class.extend({
 				map: map,
 				title: markers[i][0]
 			});
-	   
+	   		current_markers.push(position);
 			// Allow each marker to have an info window	
 			google.maps.event.addListener(marker, 'click', (function(marker, i) {
 				return function() {
