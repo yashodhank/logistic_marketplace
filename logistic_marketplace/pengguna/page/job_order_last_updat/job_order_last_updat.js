@@ -105,7 +105,7 @@ MapLastUpdate = Class.extend({
 			},
 			btn: btn,
 			callback: function(r) {
-				alert(r.toString());
+				alert(r.message);
 				if(!r.exc) {
 					loaded_data = r.message;
 					me.render();
