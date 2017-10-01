@@ -73,21 +73,16 @@ MapLastUpdate = Class.extend({
 			principle: frappe.defaults.get_user_default("principle"),
 			vendor: frappe.defaults.get_user_default("vendor")
 		};
-		this.elements.principle.on("change", function() {
-				this.options.principle = this.elements.principle.val();
+		$.each(this.elements, function(k, v) {
+			alert(k);
+		}
+		$.each(this.options, function(k, v) {
+			//me.elements[k].val(frappe.datetime.str_to_user(v));
+			this.elements[k].on("change", function() {
+				this.options[k] = this.elements[k].val();
 				this.get_data();
 			});
-		this.elements.vendor.on("change", function() {
-				this.options.vendor = this.elements.vendor.val();
-				this.get_data();
-			});
-		// $.each(this.options, function(k, v) {
-		// 	//me.elements[k].val(frappe.datetime.str_to_user(v));
-		// 	this.elements[k].on("change", function() {
-		// 		this.options[k] = this.elements[k].val();
-		// 		this.get_data();
-		// 	});
-		// });
+		});
 		this.elements.refresh_btn.on("click", function() {
 			this.get_data(this);
 		});
