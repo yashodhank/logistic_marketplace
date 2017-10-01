@@ -86,7 +86,7 @@ MapLastUpdate = Class.extend({
 			});
 		});
 		this.elements.refresh_btn.on("click", function() {
-			this.get_data(this);
+			me.get_data(this);
 		});
 	},
 	get_data: function(btn) {
