@@ -61,7 +61,7 @@ MapLastUpdate = Class.extend({
 			"options": "Principle",
 			"default": frappe.defaults.get_user_default("principle"),
 			"read_only":principle_ro
-			}),
+			}).$wrapper.find("input").attr("placeholder", label),
 			vendor: wrapper.page.add_field({
 			"fieldname":"vendor",
 			"label": __("Vendor"),
@@ -69,7 +69,7 @@ MapLastUpdate = Class.extend({
 			"options": "Vendor",
 			"default": frappe.defaults.get_user_default("vendor"),
 			"read_only":vendor_ro
-			}),
+			}).$wrapper.find("input").attr("placeholder", label),
 			refresh_btn: wrapper.page.set_primary_action(__("Refresh"),
 				function() { me.get_data(); }, "fa fa-refresh")
 		};
