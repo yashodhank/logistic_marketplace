@@ -75,6 +75,7 @@ MapLastUpdate = Class.extend({
 		};
 		$.each(this.options, function(k, v) {
 			//me.elements[k].val(frappe.datetime.str_to_user(v));
+			alert(k);
 			this.elements[k].on("change", function() {
 				this.options[k] = this.elements[k].val();
 				this.get_data();
