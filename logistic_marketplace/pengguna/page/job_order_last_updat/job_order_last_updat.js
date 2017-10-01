@@ -20,7 +20,7 @@ MapLastUpdate = Class.extend({
 		var me = this;
 
 		var script = document.createElement('script');
-		script.src = "//maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+		script.src = "//maps.googleapis.com/maps/api/js?sensor=false";
 		document.body.appendChild(script);
 		var themap;
 	    var bounds = new google.maps.LatLngBounds();
@@ -31,7 +31,7 @@ MapLastUpdate = Class.extend({
 		    			};
                     
     	// Display a map on the page
-	    themap = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+	    themap = new google.maps.Map($(wrapper).find(".layout-main"), mapOptions);
     	themap.setTilt(45);
 
 		principle_ro=0
