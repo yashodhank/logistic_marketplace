@@ -75,13 +75,14 @@ MapLastUpdate = Class.extend({
 		};
 		$.each(this.options, function(k, v) {
 			//me.elements[k].val(frappe.datetime.str_to_user(v));
-			me.elements[k].on("change", function() {
-				alert(me.elements[k].val());
-				me.options[k] = me.elements[k].val();
-				me.get_data();
+			this.elements[k].on("change", function() {
+				this.options[k] = this.elements[k].val();
+				this.get_data();
 			});
 		});
-				
+		this.elements.refresh_btn.on("click", function() {
+			this.get_data(this);
+		});
 	},
 	get_data: function(btn) {
 		if (loaded==1){
