@@ -69,6 +69,10 @@ MapLastUpdate = Class.extend({
 			refresh_btn: wrapper.page.set_primary_action(__("Refresh"),
 				function() { me.get_data(); }, "fa fa-refresh")
 		};
+		this.options = {
+			principle: frappe.defaults.get_user_default("principle"),
+			vendor: frappe.defaults.get_user_default("vendor")
+		};
 		$.each(this.options, function(k, v) {
 			me.elements[k].val(frappe.datetime.str_to_user(v));
 			me.elements[k].on("change", function() {
