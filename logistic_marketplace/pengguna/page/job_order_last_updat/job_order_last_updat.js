@@ -80,8 +80,9 @@ MapLastUpdate = Class.extend({
 		};
 		$.each(this.options, function(k, v) {
 			//me.elements[k].val(frappe.datetime.str_to_user(v));
-			me.elements[k].val(v);
+			//me.elements[k].val(v);
 			me.elements[k].on("change", function() {
+				alert($(this).val());
 				me.options[k] = $(this).val();
 			});
 		});
