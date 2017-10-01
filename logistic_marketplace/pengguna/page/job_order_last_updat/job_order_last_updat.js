@@ -1,3 +1,9 @@
+var script = document.createElement('script');
+script.src = "//maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+document.body.appendChild(script);
+var map;
+var bounds;
+
 frappe.pages['job-order-last-updat'].on_page_load = function(wrapper) {
 	var page = frappe.ui.make_app_page({
 		parent: wrapper,
@@ -18,12 +24,7 @@ MapLastUpdate = Class.extend({
 	},
 	setup: function(wrapper) {
 		var me = this;
-
-		$('<script src="//maps.googleapis.com/maps/api/js?sensor=false&callback=render"/>')
-			.appendTo($(wrapper).find(".layout-main"));
-
-		var themap;
-	    var bounds = new google.maps.LatLngBounds();
+	    bounds = new google.maps.LatLngBounds();
 	    var mapOptions = {
 	    				    mapTypeId: 'roadmap',
 							center: {lat:-7.3111249,lng:112.7279283},
@@ -31,8 +32,8 @@ MapLastUpdate = Class.extend({
 		    			};
                     
     	// Display a map on the page
-	    themap = new google.maps.Map($(wrapper).find(".layout-main"), mapOptions);
-    	themap.setTilt(45);
+	    map = new google.maps.Map($(wrapper).find(".layout-main"), mapOptions);
+    	map.setTilt(45);
 
 		principle_ro=0
 		if (frappe.session.principle){
@@ -61,8 +62,7 @@ MapLastUpdate = Class.extend({
 			"read_only":vendor_ro
 			}),
 			refresh_btn: wrapper.page.set_primary_action(__("Refresh"),
-				function() { me.get_data(); }, "fa fa-refresh"),
-			map:themap
+				function() { me.get_data(); }, "fa fa-refresh")
 		};
 				
 	},
@@ -87,7 +87,6 @@ MapLastUpdate = Class.extend({
 		var me = this;
 		data = me.options.data;
 		markers = [];
-		map=me.elements.map;
 		infoWindowContent = [];
 		for (var row in data){
 			info = data[row];
