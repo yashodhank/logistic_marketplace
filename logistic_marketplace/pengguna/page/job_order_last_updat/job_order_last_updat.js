@@ -28,7 +28,7 @@ frappe.pages['job-order-last-updat'].on_page_load = function(wrapper) {
 MapLastUpdate = Class.extend({
 	init: function(wrapper) {
 		var me = this;
-		$('<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrMjPyhsG0hq2m7e2ODQvvDT31O-eINGE &callback=initMap"></script><div id="map" class="map"></div>').appendTo($(wrapper).find(".layout-main"))
+		$('<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrMjPyhsG0hq2m7e2ODQvvDT31O-eINGE&callback=initMap"></script><div id="map" class="map"></div>').appendTo($(wrapper).find(".layout-main"))
 		// 0 setTimeout hack - this gives time for canvas to get width and height
 		setTimeout(function() {
 			me.setup(wrapper);
