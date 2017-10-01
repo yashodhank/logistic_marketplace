@@ -19,9 +19,9 @@ MapLastUpdate = Class.extend({
 	setup: function(wrapper) {
 		var me = this;
 
-		var script = document.createElement('script');
-		script.src = "//maps.googleapis.com/maps/api/js?sensor=false";
-		document.body.appendChild(script);
+		$('<script src="//maps.googleapis.com/maps/api/js?sensor=false&callback=render"/>')
+			.appendTo($(wrapper).find(".layout-main"));
+
 		var themap;
 	    var bounds = new google.maps.LatLngBounds();
 	    var mapOptions = {
