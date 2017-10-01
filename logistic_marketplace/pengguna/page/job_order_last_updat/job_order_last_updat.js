@@ -3,6 +3,16 @@ var bounds;
 var appgg;
 function initMap(){
 	appgg.render();
+	bounds = new google.maps.LatLngBounds();
+	var mapOptions = {
+						mapTypeId: 'roadmap',
+						center: {lat:-7.3111249,lng:112.7279283},
+						zoom: 10
+					};
+				
+	// Display a map on the page
+	map = new google.maps.Map(document.getElementById("map"), mapOptions);
+	map.setTilt(45);
 }
 frappe.pages['job-order-last-updat'].on_page_load = function(wrapper) {
 	var page = frappe.ui.make_app_page({
@@ -25,16 +35,7 @@ MapLastUpdate = Class.extend({
 	},
 	setup: function(wrapper) {
 		var me = this;
-		bounds = new google.maps.LatLngBounds();
-		var mapOptions = {
-							mapTypeId: 'roadmap',
-							center: {lat:-7.3111249,lng:112.7279283},
-							zoom: 10
-						};
-					
-		// Display a map on the page
-		map = new google.maps.Map($(wrapper).find(".map"), mapOptions);
-		map.setTilt(45);
+		
 
 		principle_ro=0
 		if (frappe.session.principle){
