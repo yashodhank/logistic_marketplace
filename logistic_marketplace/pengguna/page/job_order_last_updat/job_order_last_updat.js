@@ -77,11 +77,8 @@ MapLastUpdate = Class.extend({
 			principle: frappe.defaults.get_user_default("principle"),
 			vendor: frappe.defaults.get_user_default("vendor")
 		};
-		
+		alert(this.elements.principle.val()+"gg");
 		$.each(this.options, function(k, v) {
-			$.each(this.elements, function(kk, vv) {
-			alert(kk);
-		});
 			//me.elements[k].val(frappe.datetime.str_to_user(v));
 			this.elements[k].on("change", function() {
 				this.options[k] = this.elements[k].val();
