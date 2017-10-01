@@ -9,7 +9,7 @@ def get_job_order_data(principle,vendor):
 	if principle!="All":
 		where = """ and p.principle ="{}" """.format(principle)
 	if vendor!="All":
-		where = """{} and p.vendor="{}" """.format(vendor)
+		where = """{} and p.vendor="{}" """.format(where,vendor)
 	result = frappe.db.sql("""select d.job_order , d.waktu,d.status,d.lo,d.lat,p.principle ,p.vendor ,d.driver
 			from `tabJob Order Update` d 
 			join `tabJob Order` p on d.job_order = p.name 
