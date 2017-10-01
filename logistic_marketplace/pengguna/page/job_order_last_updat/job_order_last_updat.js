@@ -3,8 +3,9 @@ var bounds;
 var appgg;
 var loaded_data=[];
 var loaded=0;
+var global_wrapper;
 function initMap(){
-	appgg.render();
+	
 	bounds = new google.maps.LatLngBounds();
 	var mapOptions = {
 						mapTypeId: 'roadmap',
@@ -16,6 +17,8 @@ function initMap(){
 	map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 	map.setTilt(45);
 	loaded=1;
+	me.setup(global_wrapper);
+	me.get_data();
 }
 frappe.pages['job-order-last-updat'].on_page_load = function(wrapper) {
 	var page = frappe.ui.make_app_page({
@@ -23,6 +26,7 @@ frappe.pages['job-order-last-updat'].on_page_load = function(wrapper) {
 		title: 'Job Order Last Update Position',
 		single_column: true
 	});
+	global_wrapper=wrapper;
 	appgg = new MapLastUpdate(wrapper);
 }
 
@@ -31,10 +35,10 @@ MapLastUpdate = Class.extend({
 		var me = this;
 		$('<style>#map_wrapper {height: 500px;}#map_canvas {width: 100%;height: 100%;}</style><script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUG1BaoBIpZIap-nr9jSpJOsEjDOQIPXo&callback=initMap"></script><div id="map_wrapper"><div class="mapping" id="map_canvas"></div></div>').appendTo($(wrapper).find(".layout-main"))
 		// 0 setTimeout hack - this gives time for canvas to get width and height
-		setTimeout(function() {
-			me.setup(wrapper);
-			me.get_data();
-		}, 0);
+		// setTimeout(function() {
+		// 	me.setup(wrapper);
+		// 	me.get_data();
+		// }, 0);
 	},
 	setup: function(wrapper) {
 		var me = this;
@@ -75,7 +79,7 @@ MapLastUpdate = Class.extend({
 		};
 		$.each(this.elements, function(k, v) {
 			alert(k);
-		}
+		});
 		$.each(this.options, function(k, v) {
 			//me.elements[k].val(frappe.datetime.str_to_user(v));
 			this.elements[k].on("change", function() {
