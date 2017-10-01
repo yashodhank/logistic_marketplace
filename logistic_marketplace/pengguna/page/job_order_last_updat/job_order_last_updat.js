@@ -53,6 +53,10 @@ MapLastUpdate = Class.extend({
 		if (frappe.session.principle){
 			vendor_ro=1
 		}
+		this.options = {
+			principle: frappe.defaults.get_user_default("principle"),
+			vendor: frappe.defaults.get_user_default("vendor")
+		};
 		this.elements = {
 			layout: $(wrapper).find(".layout-main"),
 			principle: wrapper.page.add_field({
@@ -62,7 +66,9 @@ MapLastUpdate = Class.extend({
 			"options": "Principle",
 			"default": frappe.defaults.get_user_default("principle"),
 			"read_only":principle_ro
-			}).$(wrapper).find("input"),
+			}).$wrapper.find("input").on("change", function() {
+				me.options.principle = $(this).val();
+			}),
 			vendor: wrapper.page.add_field({
 			"fieldname":"vendor",
 			"label": __("Vendor"),
@@ -70,22 +76,21 @@ MapLastUpdate = Class.extend({
 			"options": "Vendor",
 			"default": frappe.defaults.get_user_default("vendor"),
 			"read_only":vendor_ro
-			}).$(wrapper).find("input"),
+			}).$wrapper.find("input").on("change", function() {
+				me.options.vendor = $(this).val();
+			}),
 			refresh_btn: wrapper.page.set_primary_action(__("Refresh"),
 				function() { me.get_data(); }, "fa fa-refresh")
 		};
-		this.options = {
-			principle: frappe.defaults.get_user_default("principle"),
-			vendor: frappe.defaults.get_user_default("vendor")
-		};
-		$.each(this.options, function(k, v) {
-			//me.elements[k].val(frappe.datetime.str_to_user(v));
-			//me.elements[k].val(v);
-			me.elements[k].on("change", function() {
-				alert($(this).val());
-				me.options[k] = $(this).val();
-			});
-		});
+		
+		// $.each(this.options, function(k, v) {
+		// 	//me.elements[k].val(frappe.datetime.str_to_user(v));
+		// 	//me.elements[k].val(v);
+		// 	me.elements[k].on("change", function() {
+		// 		alert($(this).val());
+		// 		me.options[k] = $(this).val();
+		// 	});
+		// });
 		// this.elements.refresh_btn.on("click", function() {
 		// 	me.get_data(this);
 		// });
