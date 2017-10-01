@@ -71,7 +71,7 @@ MapLastUpdate = Class.extend({
 				
 	},
 	get_data: function(btn) {
-		if (loaded==0){
+		if (loaded==1){
 		var me = this;
 		frappe.call({
 			method: "logistic_marketplace.pengguna.page.job_order_last_updat.job_order_last_update.get_job_order_data",
@@ -90,7 +90,7 @@ MapLastUpdate = Class.extend({
 		}
 	},
 	render: function() {
-		if (loaded==0){
+		if (loaded==1){
 		var me = this;
 		data = me.options.data;
 		markers = [];
