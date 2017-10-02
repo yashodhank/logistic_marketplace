@@ -7,7 +7,7 @@ import frappe
 from frappe.model.document import Document
 
 class Driver(Document):	
-	def on_update(self):
+	def validate(self):
 		result = frappe.db.sql("""select name from `tabUser` where name="{}" """.format(self.email),as_list=1)
 		for row in result:
 			if row[0]==self.email:
