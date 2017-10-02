@@ -5,6 +5,8 @@ var loaded_data=[];
 var loaded=0;
 var global_wrapper;
 var current_markers=[];
+var pp;
+var vv;
 function initMap(){
 	
 	bounds = new google.maps.LatLngBounds();
@@ -97,6 +99,7 @@ MapLastUpdate = Class.extend({
 		vv=this.options.vendor;
 		if (!pp){pp="All"}
 		if (!vv){vv="All"}
+
 		frappe.call({
 			method: "logistic_marketplace.pengguna.page.job_order_last_updat.job_order_last_update.get_job_order_data",
 			args: {
@@ -106,7 +109,6 @@ MapLastUpdate = Class.extend({
 			btn: btn,
 			callback: function(r) {
 				if(!r.exc) {
-					alert(r.message);
 					if (r.message=="No Data"){
 						alert("No Data");
 						loaded_data=[];
