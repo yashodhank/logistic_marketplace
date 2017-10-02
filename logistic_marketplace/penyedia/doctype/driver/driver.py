@@ -10,7 +10,8 @@ class Driver(Document):
 	def on_update(self):
 		result = frappe.db.sql("""select name from `tabUser` where name="{}" """.format(self.email),as_list=1)
 		for row in result:
-			frappe.throw("Email Already Used")
+			if row[0]==self.email:
+				frappe.throw("Email Already Used {}".format(row[0]))
 	def after_insert(self):
 		password = "asd123"
 		if self.password:
