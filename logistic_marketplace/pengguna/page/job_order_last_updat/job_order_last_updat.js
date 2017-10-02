@@ -106,7 +106,9 @@ MapLastUpdate = Class.extend({
 			btn: btn,
 			callback: function(r) {
 				if(!r.exc) {
+					alert(r.message);
 					if (r.message=="No Data"){
+						alert("No Data");
 						loaded_data=[];
 					}else{
 						loaded_data = r.message;
