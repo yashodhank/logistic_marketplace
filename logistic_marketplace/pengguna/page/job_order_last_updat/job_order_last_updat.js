@@ -81,7 +81,7 @@ MapLastUpdate = Class.extend({
 		
 		$.each(this.options, function(k, v) {
 			//me.elements[k].val(frappe.datetime.str_to_user(v));
-			me.elements[k].val("All");
+			me.elements[k].val(me.options[k]);
 			me.elements[k].on("change", function() {
 				me.options[k] = $(this).val();
 			});
@@ -105,9 +105,13 @@ MapLastUpdate = Class.extend({
 			},
 			btn: btn,
 			callback: function(r) {
-				alert(r.message.length);
 				if(!r.exc) {
-					loaded_data = r.message;
+					if (r.message=="No Data"){
+						loaded_data=[];
+					}else{
+						loaded_data = r.message;
+					}
+					
 					me.render();
 				}
 			}
