@@ -16,7 +16,7 @@ class Driver(Document):
 		if self.password:
 			password = self.password
 		roles_to_apply=[{"role":"Driver"}]
-			doc = frappe.get_doc({
+		gg = frappe.get_doc({
 			"doctype": "User",
 			"email":self.email,
 			"first_name":self.nama,
@@ -25,7 +25,7 @@ class Driver(Document):
 			"send_password_update_notification":0,
 			"roles":roles_to_apply
 			})
-		doc.insert()
+		gg.insert()
 		perm = frappe.get_doc({
 			"doctype": "User Permission",
 			"user":self.email,
