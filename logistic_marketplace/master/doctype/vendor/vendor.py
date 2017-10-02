@@ -17,7 +17,7 @@ class Vendor(Document):
 		if self.password:
 			password = self.password
 		roles_to_apply=[{"role":"Vendor"}]
-			doc = frappe.get_doc({
+		doc = frappe.get_doc({
 			"doctype": "User",
 			"email":self.email,
 			"first_name":self.nama,
@@ -27,7 +27,7 @@ class Vendor(Document):
 			"roles":roles_to_apply
 			})
 		doc.insert()
-			perm = frappe.get_doc({
+		perm = frappe.get_doc({
 			"doctype": "User Permission",
 			"user":self.email,
 			"allow":"Vendor",
