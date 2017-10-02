@@ -10,7 +10,7 @@ class Vendor(Document):
 	def validate(self):
 		result = frappe.db.sql("""select name from `tabUser` where name="{}" """.format(self.email),as_list=1)
 		for row in result:
-			frappe.throw("Email Already Used")
+			frappe.throw("Email Already Used {}".format(row))
 	def after_insert(self):
 		password = "asd123"
 		if self.password:
