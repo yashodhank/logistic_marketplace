@@ -17,7 +17,6 @@ def get_job_order_data(principle,vendor):
 		if jo != row.job_order:
 			jo = row.job_order
 			last.append(row)
-	return []
 	if last==[]:
 		return "No Data"
 	return last

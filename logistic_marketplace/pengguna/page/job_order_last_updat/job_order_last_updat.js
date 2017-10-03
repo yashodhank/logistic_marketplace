@@ -5,8 +5,7 @@ var loaded_data=[];
 var loaded=0;
 var global_wrapper;
 var current_markers=[];
-var pp;
-var vv;
+
 function initMap(){
 	
 	bounds = new google.maps.LatLngBounds();
@@ -95,8 +94,8 @@ MapLastUpdate = Class.extend({
 	get_data: function(btn) {
 		if (loaded==1){
 		var me = this;
-		pp=this.options.principle;
-		vv=this.options.vendor;
+		var pp=this.options.principle;
+		var vv=this.options.vendor;
 		if (!pp){pp="All"}
 		if (!vv){vv="All"}
 
@@ -108,6 +107,7 @@ MapLastUpdate = Class.extend({
 			},
 			btn: btn,
 			callback: function(r) {
+				alert(JSON.stringify(r.message))
 				if(!r.exc) {
 					if (r.message=="No Data"){
 						alert("No Data");
@@ -125,7 +125,8 @@ MapLastUpdate = Class.extend({
 	render: function() {
 		if (loaded==1){
 		var me = this;
-		data = loaded_data;
+		var data = loaded_data;
+		alert(JSON.stringify(data))
 		for( i = 0; i < current_markers.length; i++ ) {
 			current_markers[i].setMap(Null);
 		}
