@@ -84,7 +84,9 @@ MapLastUpdate = Class.extend({
 			//me.elements[k].val(frappe.datetime.str_to_user(v));
 			me.elements[k].val(me.options[k]);
 			me.elements[k].on("change", function() {
+				alert($(this).val();
 				me.options[k] = $(this).val();
+				alert(me.options.principle);
 			});
 		});
 		// this.elements.refresh_btn.on("click", function() {
@@ -96,12 +98,14 @@ MapLastUpdate = Class.extend({
 		var me = this;
 		var pp=this.options.principle;
 		var vv=this.options.vendor;
+		alert(pp);
+		alert(this.options.principle);
 		if (pp==null || pp==""){pp="All"}
 		if (vv==null || vv==""){vv="All"}
 		alert(JSON.stringify({
 					principle: pp,
 					vendor: vv
-			}))
+			}));
 		frappe.call({
 			method: "logistic_marketplace.pengguna.page.job_order_last_updat.job_order_last_update.get_job_order_data",
 			args: {
