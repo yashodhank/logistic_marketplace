@@ -84,6 +84,7 @@ MapLastUpdate = Class.extend({
 			//me.elements[k].val(frappe.datetime.str_to_user(v));
 			me.elements[k].val(me.options[k]);
 			me.elements[k].on("change", function() {
+				alert("a");
 				alert($(this).val());
 				me.options[k] = $(this).val();
 				alert(me.options.principle);
