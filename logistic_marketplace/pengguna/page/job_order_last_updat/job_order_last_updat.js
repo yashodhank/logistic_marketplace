@@ -98,7 +98,10 @@ MapLastUpdate = Class.extend({
 		var vv=this.options.vendor;
 		if (!pp){pp="All"}
 		if (!vv){vv="All"}
-
+		alert(JSON.stringify({
+					principle: pp,
+					vendor: vv
+			}))
 		frappe.call({
 			method: "logistic_marketplace.pengguna.page.job_order_last_updat.job_order_last_update.get_job_order_data",
 			args: {
