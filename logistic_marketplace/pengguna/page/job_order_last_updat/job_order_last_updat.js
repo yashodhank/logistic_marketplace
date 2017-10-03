@@ -89,10 +89,7 @@ MapLastUpdate = Class.extend({
 		var vv=this.elements.vendor.val();
 		if (pp==null || pp==""){pp="All"}
 		if (vv==null || vv==""){vv="All"}
-		alert(JSON.stringify({
-					principle: pp,
-					vendor: vv
-			}));
+
 		frappe.call({
 			method: "logistic_marketplace.pengguna.page.job_order_last_updat.job_order_last_update.get_job_order_data",
 			args: {
@@ -101,7 +98,6 @@ MapLastUpdate = Class.extend({
 			},
 			btn: btn,
 			callback: function(r) {
-				alert(JSON.stringify(r.message))
 				if(!r.exc) {
 					if (r.message=="No Data"){
 						loaded_data=[];
@@ -147,7 +143,7 @@ MapLastUpdate = Class.extend({
 				map: map,
 				title: markers[i][0]
 			});
-	   		current_markers.push(position);
+	   		current_markers.push(marker);
 			// Allow each marker to have an info window	
 			google.maps.event.addListener(marker, 'click', (function(marker, i) {
 				return function() {
