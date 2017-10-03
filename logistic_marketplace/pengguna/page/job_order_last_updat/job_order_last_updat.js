@@ -54,10 +54,6 @@ MapLastUpdate = Class.extend({
 		if (frappe.session.principle){
 			vendor_ro=1
 		}
-		this.options = {
-			principle: frappe.defaults.get_user_default("principle"),
-			vendor: frappe.defaults.get_user_default("vendor")
-		};
 		this.elements = {
 			layout: $(wrapper).find(".layout-main"),
 			principle: wrapper.page.add_field({
@@ -77,21 +73,11 @@ MapLastUpdate = Class.extend({
 			"read_only":vendor_ro
 			}).$wrapper.find("input"),
 			refresh_btn: wrapper.page.set_primary_action(__("Refresh"),
-				function() { for( i = 0; i < current_markers.length; i++ ) {
-			current_markers[i].setMap(Null);
-		} }, "fa fa-refresh")
+				function() { 
+					me.get_data();
+			}, "fa fa-refresh")
 		};
 		
-		$.each(this.options, function(k, v) {
-			//me.elements[k].val(frappe.datetime.str_to_user(v));
-			me.elements[k].val(me.options[k]);
-			me.elements[k].on("change", function() {
-				alert("a");
-				alert($(this).val());
-				me.options[k] = $(this).val();
-				alert(me.options.principle);
-			});
-		});
 		// this.elements.refresh_btn.on("click", function() {
 		// 	me.get_data(this);
 		// });
@@ -99,10 +85,8 @@ MapLastUpdate = Class.extend({
 	get_data: function(btn) {
 		if (loaded==1){
 		var me = this;
-		var pp=this.options.principle;
-		var vv=this.options.vendor;
-		alert(pp);
-		alert(this.options.principle);
+		var pp=this.elements.principle.val();
+		var vv=this.elements.vendor.val();
 		if (pp==null || pp==""){pp="All"}
 		if (vv==null || vv==""){vv="All"}
 		alert(JSON.stringify({
@@ -120,7 +104,6 @@ MapLastUpdate = Class.extend({
 				alert(JSON.stringify(r.message))
 				if(!r.exc) {
 					if (r.message=="No Data"){
-						alert("No Data");
 						loaded_data=[];
 					}else{
 						loaded_data = r.message;
@@ -136,7 +119,6 @@ MapLastUpdate = Class.extend({
 		if (loaded==1){
 		var me = this;
 		var data = loaded_data;
-		alert(JSON.stringify(data))
 		for( i = 0; i < current_markers.length; i++ ) {
 			current_markers[i].setMap(Null);
 		}
