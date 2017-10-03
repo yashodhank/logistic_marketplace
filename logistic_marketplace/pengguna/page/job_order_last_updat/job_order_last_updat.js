@@ -116,6 +116,7 @@ MapLastUpdate = Class.extend({
 		}
 	},
 	render: function() {
+		alert("Render funtion");
 		if (loaded==1){
 		var me = this;
 		var data = loaded_data;
