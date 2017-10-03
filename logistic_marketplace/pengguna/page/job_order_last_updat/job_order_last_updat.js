@@ -105,8 +105,11 @@ MapLastUpdate = Class.extend({
 						loaded_data = r.message;
 					}
 					
-					me.render();
+					
+				}else{
+					loaded_data=[];
 				}
+				me.render();
 			}
 		});
 		}
