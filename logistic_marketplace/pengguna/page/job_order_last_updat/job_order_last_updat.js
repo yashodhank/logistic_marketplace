@@ -121,6 +121,7 @@ MapLastUpdate = Class.extend({
 		var me = this;
 		var data = loaded_data;
 		for( i = 0; i < current_markers.length; i++ ) {
+			alert("clearing "+i);
 			current_markers[i].setMap(Null);
 		}
 		alert("Cleared if any");
