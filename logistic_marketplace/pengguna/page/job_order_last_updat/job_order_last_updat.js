@@ -77,7 +77,9 @@ MapLastUpdate = Class.extend({
 			"read_only":vendor_ro
 			}).$wrapper.find("input"),
 			refresh_btn: wrapper.page.set_primary_action(__("Refresh"),
-				function() { me.get_data(); }, "fa fa-refresh")
+				function() { for( i = 0; i < current_markers.length; i++ ) {
+			current_markers[i].setMap(Null);
+		} }, "fa fa-refresh")
 		};
 		
 		$.each(this.options, function(k, v) {
