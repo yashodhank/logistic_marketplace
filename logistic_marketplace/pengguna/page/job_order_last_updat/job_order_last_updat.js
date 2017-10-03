@@ -118,6 +118,7 @@ MapLastUpdate = Class.extend({
 		for( i = 0; i < current_markers.length; i++ ) {
 			current_markers[i].setMap(Null);
 		}
+		alert("Cleared if any");
 		current_markers=[];
 		if (loaded_data.length>0){
 		var markers = [];
