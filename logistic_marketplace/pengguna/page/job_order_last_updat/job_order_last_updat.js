@@ -89,7 +89,6 @@ MapLastUpdate = Class.extend({
 		var vv=this.elements.vendor.val();
 		if (pp==null || pp==""){pp="All"}
 		if (vv==null || vv==""){vv="All"}
-		alert("Request will be sent");
 		frappe.call({
 			method: "logistic_marketplace.pengguna.page.job_order_last_updat.job_order_last_update.get_job_order_data",
 			args: {
@@ -98,7 +97,6 @@ MapLastUpdate = Class.extend({
 			},
 			btn: btn,
 			callback: function(r) {
-				alert("callback");
 				if(!r.exc) {
 					if (r.message=="No Data"){
 						loaded_data=[];
@@ -116,13 +114,11 @@ MapLastUpdate = Class.extend({
 		}
 	},
 	render: function() {
-		alert("Render funtion");
 		if (loaded==1){
 		var me = this;
 		var data = loaded_data;
 		for( i = 0; i < current_markers.length; i++ ) {
-			alert("clearing "+i+" of "+current_markers.length);
-			current_markers[i].setMap(Null);
+			current_markers[i].setMap(null);
 		}
 		current_markers=[];
 		if (loaded_data.length>0){
