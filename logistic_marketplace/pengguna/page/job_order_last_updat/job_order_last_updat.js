@@ -96,8 +96,8 @@ MapLastUpdate = Class.extend({
 		var me = this;
 		var pp=this.options.principle;
 		var vv=this.options.vendor;
-		if (!pp){pp="All"}
-		if (!vv){vv="All"}
+		if (pp==null || pp==""){pp="All"}
+		if (vv==null || vv==""){vv="All"}
 		alert(JSON.stringify({
 					principle: pp,
 					vendor: vv
