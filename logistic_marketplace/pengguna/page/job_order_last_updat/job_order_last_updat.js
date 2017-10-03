@@ -121,10 +121,9 @@ MapLastUpdate = Class.extend({
 		var me = this;
 		var data = loaded_data;
 		for( i = 0; i < current_markers.length; i++ ) {
-			alert("clearing "+i);
+			alert("clearing "+i+" of "+current_markers.length);
 			current_markers[i].setMap(Null);
 		}
-		alert("Cleared if any");
 		current_markers=[];
 		if (loaded_data.length>0){
 		var markers = [];
@@ -150,7 +149,7 @@ MapLastUpdate = Class.extend({
 				map: map,
 				title: markers[i][0]
 			});
-	   		current_markers.push(marker);
+	   		
 			// Allow each marker to have an info window	
 			google.maps.event.addListener(marker, 'click', (function(marker, i) {
 				return function() {
@@ -160,6 +159,7 @@ MapLastUpdate = Class.extend({
 			})(marker, i));
 				// Automatically center the map fitting all markers on the screen
 			map.fitBounds(bounds);
+			current_markers.push(marker);
 		}
 			// Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
 		var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
