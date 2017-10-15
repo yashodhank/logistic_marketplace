@@ -5,9 +5,10 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
-
+from frappe.utils.password import update_password as _update_password
 class Driver(Document):	
-	def validate(self):
+
+	def before_insert(self):
 		result = frappe.db.sql("""select name from `tabUser` where name="{}" """.format(self.email),as_list=1)
 		for row in result:
 			if row[0]==self.email:
@@ -28,6 +29,7 @@ class Driver(Document):
 			})
 
 		gg.insert()
+		_update_password(self.email,password)
 		perm = frappe.get_doc({
 			"doctype": "User Permission",
 			"user":self.email,

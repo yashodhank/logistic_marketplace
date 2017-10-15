@@ -90,23 +90,23 @@ boot_session = "logistic_marketplace.boot.boot_session"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
 # 	"all": [
 # 		"logistic_marketplace.tasks.all"
 # 	],
 # 	"daily": [
 # 		"logistic_marketplace.tasks.daily"
 # 	],
-# 	"hourly": [
-# 		"logistic_marketplace.tasks.hourly"
-# 	],
+	"hourly": [
+		"logistic_marketplace.pengguna.doctype.job_order.job_order.notify"
+	],
 # 	"weekly": [
 # 		"logistic_marketplace.tasks.weekly"
 # 	]
 # 	"monthly": [
 # 		"logistic_marketplace.tasks.monthly"
 # 	]
-# }
+}
 
 # Testing
 # -------
