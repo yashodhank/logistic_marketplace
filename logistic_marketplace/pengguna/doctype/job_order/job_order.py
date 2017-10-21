@@ -10,6 +10,13 @@ from frappe.utils import get_request_session
 
 class JobOrder(Document):
 	pass
+	def on_update(self):
+		if self.driver:
+			data  = frappe.db.sql("""select driver from `tabJob Order` where docstatus=1 and driver="{}" and status != "{}"  """.format(self.driver,self.status),as_list=1)
+			status = "Tersedia"
+			for row in data:
+				found="Tidak Tersedia"
+			frappe.db.sql("""update `tabDriver` set status="{}" where name="{}" """.format(found,self.driver),as_list=1)
 	def validate(self):
 		if self.truck and self.strict==1:
 			if self.truck_type!=self.suggest_truck_type:
@@ -34,4 +41,4 @@ def notify():
 		content = {"to":"/topics/{}".format(row['principle']) , "data":{"message":msg,"job_order":row['name']}
 		s.post(url,data=content,header=header)
 		text = "Dear, {} <br/><br/>Jor Order : {}<br/>Reference No : {}<br/>Vendor : {}".format(row['principle'],row['name'],row['reference'],row['vendor'])
-		#frappe.sendmail(recipients=email, subject=subject,content = text)
+		frappe.sendmail(recipients=email, subject=subject,content = text)
