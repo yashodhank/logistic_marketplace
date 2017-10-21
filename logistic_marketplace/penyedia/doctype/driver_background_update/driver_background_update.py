@@ -7,4 +7,11 @@ import frappe
 from frappe.model.document import Document
 
 class DriverBackgroundUpdate(Document):
-	pass
+	def validate(self):
+		doc = frappe.get_doc("Driver",self.driver)
+		doc.lo = self.lo
+		doc.lat = self.lat
+		doc.batery = self.batery
+		doc.signal=self.signal
+		doc.last_update = self.last_update
+		doc.save()
