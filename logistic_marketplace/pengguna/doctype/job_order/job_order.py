@@ -38,7 +38,7 @@ def notify():
 		else:
 			subject="Job Order belum di terima lebih dari 9 jam"
 			msg = "{} <{}> belum di terima lebih dari 4 jam".format(row['name'],row['reference'])
-		content = {"to":"/topics/{}".format(row['principle']) , "data":{"message":msg,"job_order":row['name']}
-		#s.post(url,content,header)
+		content = {"to":"/topics/{}".format(row['principle']) , "data":{"message":msg,"job_order":row['name']}}
+		s.post(url,content,header)
 		text = "Dear, {} <br/><br/>Jor Order : {}<br/>Reference No : {}<br/>Vendor : {}".format(row['principle'],row['name'],row['reference'],row['vendor'])
-		#frappe.sendmail(recipients=email, subject=subject,content = text)
+		frappe.sendmail(recipients=email, subject=subject,content = text)
