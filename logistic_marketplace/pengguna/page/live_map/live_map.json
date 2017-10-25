@@ -1,0 +1,29 @@
+{
+ "content": null, 
+ "creation": "2017-10-25 23:50:37.244052", 
+ "docstatus": 0, 
+ "doctype": "Page", 
+ "idx": 0, 
+ "modified": "2017-10-25 23:51:32.724770", 
+ "modified_by": "Administrator", 
+ "module": "Pengguna", 
+ "name": "live-map", 
+ "owner": "Administrator", 
+ "page_name": "Live Map", 
+ "roles": [
+  {
+   "role": "System Manager"
+  }, 
+  {
+   "role": "Principle"
+  }, 
+  {
+   "role": "Vendor"
+  }
+ ], 
+ "script": null, 
+ "standard": "Yes", 
+ "style": null, 
+ "system_page": 0, 
+ "title": "Live Map"
+}
