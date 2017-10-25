@@ -51,6 +51,4 @@ def test_notify():
 	content = {"to":"/topics/PT_CocaCola_Amatil_Indonesia","notification":{"title":"title","body":"body"}, "data":{"job_order":"JO-20171000037"}}
 	gg =  s.post(url=url,headers=header,data=json.dumps(content))
 	print gg.content
-	gg =  s.post(url=url,headers=json.dumps(header),data=json.dumps(content))
-	print gg.content
 		
