@@ -43,3 +43,11 @@ def notify():
 		s.post(url,content,header)
 		text = "Dear, {} <br/><br/>Principle : {}<br/>Jor Order : {}<br/>Reference No : {}<br/>Vendor : {}".format(row['principle'],row['vendor'],row['name'],row['reference'],row['vendor'])
 		frappe.sendmail(recipients=email, subject=subject,content = text)
+
+def test_notify():
+	s = get_request_session()
+	url = "https://fcm.googleapis.com/fcm/send"
+	header = {"Authorization: key=AAAA7ndto_Q:APA91bHVikGANVsFaK2UEKLVXQEA1cleaeM7DlLLuaA87jEVhBGNTe4t8fi0h5Ttc7jRkoiEkZYlrw7Idsn9S9ZfDFtl1S3H3j21Xs8VXtANCDjycLLkMAyLLdHKaBfi3NYc3Z8VIxo8","Content-Type: application/json"}
+	content = {"to":"/topics/PT CocaCola Amatil Indonesia", "data":{"message":"test","job_order":"JO-20171000037"}}
+	s.post(url,content,header)
+	
