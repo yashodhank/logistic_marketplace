@@ -49,5 +49,6 @@ def test_notify():
 	url = "https://fcm.googleapis.com/fcm/send"
 	header = {"Authorization": "key=AAAA7ndto_Q:APA91bHVikGANVsFaK2UEKLVXQEA1cleaeM7DlLLuaA87jEVhBGNTe4t8fi0h5Ttc7jRkoiEkZYlrw7Idsn9S9ZfDFtl1S3H3j21Xs8VXtANCDjycLLkMAyLLdHKaBfi3NYc3Z8VIxo8","Content-Type": "application/json"}
 	content = {"to":"/topics/PT_CocaCola_Amatil_Indonesia","notification":{"title":"title","body":"body"}, "data":{"job_order":"JO-20171000037"}}
-	print s.post(url=url,headers=header,data=content)
+	gg =  s.post(url=url,headers=header,data=content)
+	print gg.content
 		
