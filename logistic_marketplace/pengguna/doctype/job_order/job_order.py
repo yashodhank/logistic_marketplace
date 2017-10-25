@@ -49,5 +49,5 @@ def test_notify():
 	url = "https://fcm.googleapis.com/fcm/send"
 	header = {"Authorization": "key=AAAA7ndto_Q:APA91bEV4YOEfU_LgfcA4ts1R9zFp_NHBicDgwfqt1K9tYtczhydMOknjAeK7VxqhNWOwkyE25z7ehg3-sSxPqhYrz0vkc63-Y7Np-CSd5fZ_EvVHbXUsm-3eXFDqBpyzvfJORLb4PNq","Content-Type": "application/json"}
 	content = {"to":"/topics/PT_CocaCola_Amatil_Indonesia", "data":{"message":"test"}}
-	print s.post(url,content,header)
+	print s.post(url,header,content)
 		
