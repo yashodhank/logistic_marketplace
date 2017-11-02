@@ -12,7 +12,7 @@ function initMap(){
 	var mapOptions = {
 						mapTypeId: 'roadmap',
 						center: {lat:-7.3111249,lng:112.7279283},
-						zoom: 10
+						zoom: 5
 					};
 				
 	// Display a map on the page
@@ -35,7 +35,7 @@ frappe.pages['job-order-last-updat'].on_page_load = function(wrapper) {
 MapLastUpdate = Class.extend({
 	init: function(wrapper) {
 		var me = this;
-		$('<style>#map_wrapper {height: 500px;}#map_canvas {width: 100%;height: 100%;}</style><script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUG1BaoBIpZIap-nr9jSpJOsEjDOQIPXo&callback=initMap"></script><div id="map_wrapper"><div class="mapping" id="map_canvas"></div></div>').appendTo($(wrapper).find(".layout-main"))
+		$('<style>#map_wrapper {height: 400px;}#map_canvas {width: 100%;height: 100%;}</style><script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUG1BaoBIpZIap-nr9jSpJOsEjDOQIPXo&callback=initMap"></script><div id="map_wrapper"><div class="mapping" id="map_canvas"></div></div>').appendTo($(wrapper).find(".layout-main"))
 		// 0 setTimeout hack - this gives time for canvas to get width and height
 		// setTimeout(function() {
 		// 	me.setup(wrapper);
@@ -159,7 +159,7 @@ MapLastUpdate = Class.extend({
 		}
 			// Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
 		var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-			this.setZoom(7);
+			this.setZoom(5);
 			google.maps.event.removeListener(boundsListener);
 		});
 	}

@@ -40,7 +40,7 @@ def notify():
 			subject="Job Order belum di terima lebih dari 9 jam"
 			msg = "{} <{}> belum di terima lebih dari 4 jam".format(row['name'],row['reference'])
 		content = {"to":"/topics/{}".format(row['vendor'].replace(" ","_")) , "notification":{"title":row["name"],"body":msg}, "data":{"job_order":row["name"]}}
-		s.post(url,content,header)
+		s.post(url=url,headers=header,data=json.dumps(content))
 		text = "Dear, {} <br/><br/>Principle : {}<br/>Jor Order : {}<br/>Reference No : {}<br/>Vendor : {}".format(row['principle'],row['vendor'],row['name'],row['reference'],row['vendor'])
 		frappe.sendmail(recipients=email, subject=subject,content = text)
 
