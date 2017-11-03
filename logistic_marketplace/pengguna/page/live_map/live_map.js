@@ -129,6 +129,9 @@ LiveMap = Class.extend({
 		}
 	},
 	render: function() {
+		var cntr= map.getCenter();
+		var zoom= map.getZoom();
+		
 		if (loaded==1){
 		var me = this;
 		var data = loaded_data;
@@ -173,6 +176,8 @@ LiveMap = Class.extend({
 			map.fitBounds(bounds);
 			current_markers.push(marker);
 		}
+		map.setCenter(cntr);
+		map.setZoom(zoom);
 			// Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
 		//var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
 		//	this.setZoom(5);
