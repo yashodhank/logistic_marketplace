@@ -48,14 +48,13 @@ LiveMap = Class.extend({
 		
 
 		var principle_ro=0
-		if (frappe.session.principle){
+		if (frappe.defaults.get_user_default("principle")){
 			principle_ro=1
 		}
 		var vendor_ro=0
-		if (frappe.session["vendor"]){
+		if (frappe.defaults.get_user_default("vendor")){
 			vendor_ro=1
 		}
-		alert(frappe.session["vendor"]);
 		this.elements = {
 			layout: $(wrapper).find(".layout-main"),
 			principle: wrapper.page.add_field({
@@ -66,7 +65,7 @@ LiveMap = Class.extend({
 			"default": frappe.defaults.get_user_default("principle"),
 			"read_only":principle_ro
 			}).$wrapper.find("input"),
-			vendor: wrapper.page.add_field({
+			vendorgg: wrapper.page.add_field({
 			"fieldname":"vendor",
 			"label": __("Vendor"),
 			"fieldtype": "Link",
@@ -97,7 +96,7 @@ LiveMap = Class.extend({
 		var me = this;
 		var dd="All";
 		var pp=this.elements.principle.val();
-		var vv=this.elements.vendor.val();
+		var vv=this.elements.vendorgg.val();
 		if ("driver" in this.elements){
 			dd=this.elements.driver.val();
 		}
