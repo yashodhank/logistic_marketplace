@@ -5,7 +5,7 @@ var loaded_data=[];
 var loaded=0;
 var global_wrapper;
 var current_markers=[];
-var timer = setInterval(function(){me.get_data();},10000)
+var timer = setInterval(function(){me.get_data(); alert("refreshed");},10000)
 
 function initMap(){
 	
@@ -173,10 +173,10 @@ LiveMap = Class.extend({
 			current_markers.push(marker);
 		}
 			// Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-		var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-			this.setZoom(5);
-			google.maps.event.removeListener(boundsListener);
-		});
+		//var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+		//	this.setZoom(5);
+		//	google.maps.event.removeListener(boundsListener);
+		//});
 	}
 	}}
 });
