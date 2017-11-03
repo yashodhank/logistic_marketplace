@@ -11,7 +11,7 @@ var timer = setInterval(function(){
 			appgg.get_data();
 		}else{
 			alert("cleared");
-			clearInterval();
+			clearInterval(timer);
 		}
 	},10000)
 
