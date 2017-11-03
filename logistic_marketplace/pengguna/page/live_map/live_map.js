@@ -52,9 +52,10 @@ LiveMap = Class.extend({
 			principle_ro=1
 		}
 		var vendor_ro=0
-		if (frappe.session.vendor){
+		if (frappe.session["vendor"]){
 			vendor_ro=1
 		}
+		alert(frappe.session["vendor"]);
 		this.elements = {
 			layout: $(wrapper).find(".layout-main"),
 			principle: wrapper.page.add_field({
