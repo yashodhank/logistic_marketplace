@@ -47,11 +47,11 @@ LiveMap = Class.extend({
 		var me = this;
 		
 
-		principle_ro=0
+		var principle_ro=0
 		if (frappe.session.principle){
 			principle_ro=1
 		}
-		vendor_ro=0
+		var vendor_ro=0
 		if (frappe.session.vendor){
 			vendor_ro=1
 		}
