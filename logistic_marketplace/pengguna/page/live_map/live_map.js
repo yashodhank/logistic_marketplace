@@ -7,8 +7,10 @@ var global_wrapper;
 var current_markers=[];
 var timer = setInterval(function(){
 		if (window.location.href=="http://172.104.163.118/desk#live-map"){
+			alert("updated");
 			appgg.get_data();
 		}else{
+			alert("cleared");
 			clearInterval();
 		}
 	},10000)
