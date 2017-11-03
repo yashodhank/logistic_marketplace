@@ -84,7 +84,7 @@ LiveMap = Class.extend({
 			"label": __("Driver"),
 			"fieldtype": "Link",
 			"options": "Driver",
-			}).$wrapper.find("input")
+			}).$wrapper.find("input");
 		}
 		// this.elements.refresh_btn.on("click", function() {
 		// 	me.get_data(this);
