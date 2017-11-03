@@ -46,12 +46,12 @@ MapLastUpdate = Class.extend({
 		var me = this;
 		
 
-		principle_ro=0
-		if (frappe.session.principle){
+		var principle_ro=0
+		if (frappe.defaults.get_user_default("principle")){
 			principle_ro=1
 		}
-		vendor_ro=0
-		if (frappe.session.vendor){
+		var vendor_ro=0
+		if (frappe.defaults.get_user_default("vendor")){
 			vendor_ro=1
 		}
 		this.elements = {
@@ -64,7 +64,7 @@ MapLastUpdate = Class.extend({
 			"default": frappe.defaults.get_user_default("principle"),
 			"read_only":principle_ro
 			}).$wrapper.find("input"),
-			vendor: wrapper.page.add_field({
+			vendorgg: wrapper.page.add_field({
 			"fieldname":"vendor",
 			"label": __("Vendor"),
 			"fieldtype": "Link",
@@ -86,7 +86,7 @@ MapLastUpdate = Class.extend({
 		if (loaded==1){
 		var me = this;
 		var pp=this.elements.principle.val();
-		var vv=this.elements.vendor.val();
+		var vv=this.elements.vendorgg.val();
 		if (pp==null || pp==""){pp="All"}
 		if (vv==null || vv==""){vv="All"}
 		frappe.call({

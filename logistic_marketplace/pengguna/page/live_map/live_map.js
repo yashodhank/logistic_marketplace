@@ -100,6 +100,7 @@ LiveMap = Class.extend({
 		if ("driver" in this.elements){
 			dd=this.elements.driver.val();
 		}
+		alert(vv+" && "+dd);
 		if (pp==null || pp==""){pp="All"}
 		if (vv==null || vv==""){vv="All"}
 		if (dd==null || dd==""){dd="All"}
