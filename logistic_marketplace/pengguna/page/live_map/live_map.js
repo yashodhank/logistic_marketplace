@@ -143,6 +143,7 @@ LiveMap = Class.extend({
 			markers.push([info.job_order,info.lat,info.lo]);
 			infoWindowContent.push(['<div class="info_content">' +
 				'<h3>'+ info.job_order+'</h3>' +
+				'<p>Principle : '+info.driver+'</p>'+
 				'<p>Principle : '+info.principle+'</p>'+
 				'<p>Vendor : '+info.vendor+'</p></div>']);
 		}
