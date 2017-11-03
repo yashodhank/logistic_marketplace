@@ -5,7 +5,7 @@ var loaded_data=[];
 var loaded=0;
 var global_wrapper;
 var current_markers=[];
-var timer = setInterval(function(){me.get_data(); alert("refreshed");},10000)
+var timer = setInterval(function(){appgg.get_data(); alert("refreshed");},10000)
 
 function initMap(){
 	
