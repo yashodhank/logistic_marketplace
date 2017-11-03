@@ -13,7 +13,7 @@ def get_position(principle,vendor,driver):
 	if driver!="All":
 		where = """{} and p.driver="{}" """.format(where,driver)
 	result = frappe.db.sql("""select p.name , d.last_update,d.lo,d.lat,p.principle ,p.vendor ,p.driver 
-		join `tabJob Order` p 
+		from `tabJob Order` p 
 		join `tabDriver` d on d.name = p.driver 
 		where p.status = "Dalam Proses" {}  order by d.last_update desc """.format(where),as_dict=1)
 	last=[]
