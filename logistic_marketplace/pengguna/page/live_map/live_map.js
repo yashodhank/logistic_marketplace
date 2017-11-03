@@ -52,7 +52,7 @@ LiveMap = Class.extend({
 			principle_ro=1
 		}
 		vendor_ro=0
-		if (frappe.session.principle){
+		if (frappe.session.vendor){
 			vendor_ro=1
 		}
 		this.elements = {
@@ -78,7 +78,14 @@ LiveMap = Class.extend({
 					me.get_data();
 			}, "fa fa-refresh")
 		};
-		
+		if (vendor_ro==1){
+			this.elements.driver=wrapper.page.add_field({
+			"fieldname":"driver",
+			"label": __("Driver"),
+			"fieldtype": "Link",
+			"options": "Driver",
+			}).$wrapper.find("input")
+		}
 		// this.elements.refresh_btn.on("click", function() {
 		// 	me.get_data(this);
 		// });
@@ -86,15 +93,21 @@ LiveMap = Class.extend({
 	get_data: function(btn) {
 		if (loaded==1){
 		var me = this;
+		var dd="All";
 		var pp=this.elements.principle.val();
 		var vv=this.elements.vendor.val();
+		if ("driver" in this.elements){
+			dd=this.elements.driver.val();
+		}
 		if (pp==null || pp==""){pp="All"}
 		if (vv==null || vv==""){vv="All"}
+		if (dd==null || dd==""){dd="All"}
 		frappe.call({
 			method: "logistic_marketplace.pengguna.page.live_map.live_map.get_position",
 			args: {
 					principle: pp,
-					vendor: vv
+					vendor: vv,
+					driver:dd
 			},
 			btn: btn,
 			callback: function(r) {

@@ -51,7 +51,7 @@ MapLastUpdate = Class.extend({
 			principle_ro=1
 		}
 		vendor_ro=0
-		if (frappe.session.principle){
+		if (frappe.session.vendor){
 			vendor_ro=1
 		}
 		this.elements = {
