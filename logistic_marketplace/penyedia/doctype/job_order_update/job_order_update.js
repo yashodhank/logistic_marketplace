@@ -5,8 +5,8 @@ frappe.ui.form.on('Job Order Update', {
 	refresh: function(frm) {
 		var html="";
 		var attachment = cur_frm.attachments.get_attachments();
-		for (var i=0;i<attachments.length();i++){
-			html=html+"<img src='"+attachments[i]+"' />";
+		for (var i=0;i<attachment.length();i++){
+			html=html+"<img src='"+attachment[i]+"' />";
 		}
 		//$.each(frm.doc.job_order_update_images, function(i,d){
 		//	html=html+"<img src='"+d.file+"' />";
