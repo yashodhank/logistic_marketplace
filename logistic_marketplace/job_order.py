@@ -13,10 +13,6 @@ from datetime import datetime
 import os, base64, re
 
 
-#list
-field = '*'
-table = 'tabJob Order' 
-
 @frappe.whitelist(allow_guest=True)
 def image():
 	response = {}
@@ -28,20 +24,21 @@ def image():
 	req = frappe.local.form_dict
 	req.filename = "checkpoint.jpg"
 
-	validate = validate_param_exist([req.checkpoint_id, req.filedata],"checkpoint_id, image")
-	if validate != True:
-		return validate
+	# validate = validate_param_exist([req.job_order_update, req.filedata],"job_order_update, filedata")
 
+	data = json.loads(req.data)
+	req.filedata = data['filedata']
+	req.job_order_update = data['job_order_update']
 	try:
 
-		uploaded = upload("Job Order Update",req.checkpoint_id,1)
+		uploaded = upload("Job Order Update",req.job_order_update,1)
 
 		data = {
 			"doctype": "Job Order Update Image",
 			"docstatus": 0,
-			"parent": req.checkpoint_id,
-			"parenttype": "Check Point",
-			"parentfield": "checkpoint_image",
+			"parent": req.job_order_update,
+			"parenttype": "Job Order Update",
+			"parentfield": "job_order_update_images",
 			"attach": uploaded["file_url"]
 		}
 			
