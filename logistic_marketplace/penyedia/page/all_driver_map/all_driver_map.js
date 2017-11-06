@@ -120,6 +120,7 @@ AllDriverMap = Class.extend({
 				'<h3>'+ info.driver+'</h3>' +
 				'<p>Nama : '+info.nama+'</p>'+
 				'<p>Phone : '+info.phone+'</p>'+
+				'<p>Status : '+info.status+'</p>'+
 				'<p>Last Update : '+info.last_update+'</p></div>']);
 		}
 			
