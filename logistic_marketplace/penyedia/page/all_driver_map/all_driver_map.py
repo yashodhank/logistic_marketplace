@@ -7,7 +7,7 @@ from frappe import _
 def get_position(driver,vendor):
 	where = ""
 	if driver!="All":
-		where = """{} and p.driver="{}" """.format(where,driver)
+		where = """{} and d.driver="{}" """.format(where,driver)
 	result = frappe.db.sql("""select d.name as "driver",d.nama,d.phone,d.last_update,d.lo,d.lat,d.status
 		from `tabDriver` d 
 		where vendor="{}" {} order by d.last_update desc """.format(vendor,where),as_dict=1)
