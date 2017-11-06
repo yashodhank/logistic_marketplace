@@ -74,12 +74,14 @@ AllDriverMap = Class.extend({
 		if (loaded==1){
 		var me = this;
 		var dd="All";
+		var vv= frappe.defaults.get_user_default("vendor");
 		dd=this.elements.driver.val();
 		if (dd==null || dd==""){dd="All"}
 		frappe.call({
 			method: "logistic_marketplace.penyedia.page.all_driver_map.all_driver_map.get_position",
 			args: {
-					driver:dd
+					driver:dd,
+					vendor:vv
 			},
 			btn: btn,
 			callback: function(r) {
