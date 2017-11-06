@@ -25,6 +25,10 @@ def get_data():
 				{
 					"type": "doctype",
 					"name": "Vendor Contact Person"
+				},
+				{
+					"type":"doctype",
+					"name":"Truck"
 				}
 			]
 		},
@@ -35,6 +39,11 @@ def get_data():
 					"type": "page",
 					"name": "job-order-last-updat",
 					"label": "Job Order Last Update Position",
+				},
+				{
+					"type":"page",
+					"name":"live-map",
+					"label":"Live Map"
 				}
 			]
 		}

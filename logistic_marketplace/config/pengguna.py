@@ -18,6 +18,10 @@ def get_data():
 				{
 					"type": "doctype",
 					"name": "Principle Contact Person"
+				},
+				{
+					"type":"doctype",
+					"name":"Location"
 				}
 			]
 		},
@@ -28,6 +32,11 @@ def get_data():
 					"type": "page",
 					"name": "job-order-last-updat",
 					"label": "Job Order Last Update Position",
+				},
+				{
+					"type":"page",
+					"name":"live-map",
+					"label":"Live Map"
 				}
 			]
 		}
