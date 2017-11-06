@@ -37,12 +37,8 @@ def get_data():
 					"type":"page",
 					"name":"live-map",
 					"label":"Live Map"
-				},
-				{
-                                        "type":"page",
-                                        "name":"all-driver-map",
-                                        "label":"All Driver Map"
-                                }
+				}
+				
 			]
 		}
 	]
