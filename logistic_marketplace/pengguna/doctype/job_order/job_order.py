@@ -34,7 +34,7 @@ class JobOrder(Document):
 			subject=""
 			subject="Job Order baru dari {}".format(self.principle)
 			msg = "{} <{}> telah di berikan oleh {}".format(self.name,self.reference,self.principle)
-			content = {"to":"/topics/{}".format(self.vendor.replace(" ","_")) , "notification":{"title":self.name,"body":msg}, "data":{"job_order":self.name]}}
+			content = {"to":"/topics/{}".format(self.vendor.replace(" ","_")) , "notification":{"title":self.name,"body":msg}, "data":{"job_order":self.name}}
 			s.post(url=url,headers=header,data=json.dumps(content))
 			#text = "Dear, {} <br/><br/>Principle : {}<br/>Jor Order : {}<br/>Reference No : {}<br/>Vendor : {}".format(row['principle'],row['vendor'],row['name'],row['reference'],row['vendor'])
 			#frappe.sendmail(recipients=email, subject=subject,content = text)
