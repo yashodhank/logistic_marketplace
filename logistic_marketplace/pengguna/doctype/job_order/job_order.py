@@ -22,6 +22,22 @@ class JobOrder(Document):
 			if self.truck_type!=self.suggest_truck_type:
 				frappe.throw("Selected Truck Type cant be {} but it should be {}".format(self.truck_type,self.suggest_truck_type))
 
+	def on_submit(self):
+		list_to = frappe.db.sql("""select email from `tabVendor` where name="{}" """.format(self.vendor),as_dict=1)
+		s = get_request_session()
+		url = "https://fcm.googleapis.com/fcm/send"
+		header = {"Authorization": "key=AAAA7ndto_Q:APA91bHVikGANVsFaK2UEKLVXQEA1cleaeM7DlLLuaA87jEVhBGNTe4t8fi0h5Ttc7jRkoiEkZYlrw7Idsn9S9ZfDFtl1S3H3j21Xs8VXtANCDjycLLkMAyLLdHKaBfi3NYc3Z8VIxo8","Content-Type": "application/json"}
+		for row in list_to:
+			email = row['email']
+			if email == "Administrator":
+				continue
+			subject=""
+			subject="Job Order baru dari {}".format(self.principle)
+			msg = "{} <{}> telah di berikan oleh {}".format(self.name,self.reference,self.principle)
+			content = {"to":"/topics/{}".format(self.vendor.replace(" ","_")) , "notification":{"title":self.name,"body":msg}, "data":{"job_order":self.name]}}
+			s.post(url=url,headers=header,data=json.dumps(content))
+			#text = "Dear, {} <br/><br/>Principle : {}<br/>Jor Order : {}<br/>Reference No : {}<br/>Vendor : {}".format(row['principle'],row['vendor'],row['name'],row['reference'],row['vendor'])
+			#frappe.sendmail(recipients=email, subject=subject,content = text)
 def notify():
 	list_to = frappe.db.sql("""select HOUR(TIMEDIFF(NOW(),j.modified)) as "lama" ,j.principle , j.name , j.reference , j.modified , j.vendor , j.owner ,v.email
 		from `tabJob Order` j left join `tabVendor` v on j.vendor = v.name where HOUR(TIMEDIFF(NOW(),j.modified)) IN (4,9) order by j.modified """,as_dict=1)
@@ -41,8 +57,8 @@ def notify():
 			msg = "{} <{}> belum di terima lebih dari 4 jam".format(row['name'],row['reference'])
 		content = {"to":"/topics/{}".format(row['vendor'].replace(" ","_")) , "notification":{"title":row["name"],"body":msg}, "data":{"job_order":row["name"]}}
 		s.post(url=url,headers=header,data=json.dumps(content))
-		text = "Dear, {} <br/><br/>Principle : {}<br/>Jor Order : {}<br/>Reference No : {}<br/>Vendor : {}".format(row['principle'],row['vendor'],row['name'],row['reference'],row['vendor'])
-		frappe.sendmail(recipients=email, subject=subject,content = text)
+		#text = "Dear, {} <br/><br/>Principle : {}<br/>Jor Order : {}<br/>Reference No : {}<br/>Vendor : {}".format(row['principle'],row['vendor'],row['name'],row['reference'],row['vendor'])
+		#frappe.sendmail(recipients=email, subject=subject,content = text)
 
 def test_notify():
 	s = get_request_session()
