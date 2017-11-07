@@ -12,7 +12,7 @@ class JobOrder(Document):
 	pass
 	def on_update(self):
 		if self.driver:
-			data  = frappe.db.sql("""select driver from `tabJob Order` where docstatus=1 and driver="{}" and status != "{}"  """.format(self.driver,self.status),as_list=1)
+			data  = frappe.db.sql("""select driver from `tabJob Order` where docstatus=1 and driver="{}" and status = "Dalam Proses"  """.format(self.driver),as_list=1)
 			status = "Tersedia"
 			for row in data:
 				found="Tidak Tersedia"
