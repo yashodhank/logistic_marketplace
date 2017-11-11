@@ -10,13 +10,15 @@ from frappe.utils import get_request_session
 
 class JobOrder(Document):
 	pass
-	def on_update(self):
+	def on_update_after_submit(self):
+		#frappe.msgprint(self.driver)
 		if self.driver:
 			data  = frappe.db.sql("""select driver from `tabJob Order` where docstatus=1 and driver="{}" and status = "Dalam Proses"  """.format(self.driver),as_list=1)
-			status = "Tersedia"
+			found = "Tersedia"
 			for row in data:
 				found="Tidak Tersedia"
 			frappe.db.sql("""update `tabDriver` set status="{}" where name="{}" """.format(found,self.driver),as_list=1)
+			#frappe.msgprint("updated")
 	def validate(self):
 		if self.truck and self.strict==1:
 			if self.truck_type!=self.suggest_truck_type:

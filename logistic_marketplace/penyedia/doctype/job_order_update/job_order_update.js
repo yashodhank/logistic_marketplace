@@ -7,7 +7,7 @@ frappe.ui.form.on('Job Order Update', {
 		var attachment = cur_frm.attachments.get_attachments();
 		//alert(JSON.stringify(attachment));
 		for (var i=0;i<attachment.length;i++){
-			html=html+attachment[i];
+			html=html+'<img src="'+attachment[i].file_url+'"/>';
 		}
 		frm.set_value("image_list",html);
 		//frm.doc.image_list=html;
