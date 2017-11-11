@@ -5,13 +5,14 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
-from frappe.utils.password import update_password as _update_password
+from frappe.utils.password import update_password as _update_password , get_decrypted_password
 class Driver(Document):	
 	def on_update(self):
-		user = frappe.get_doc("User",self.email)
-		user.new_password=self.password
-		user.save()
-		#_update_password(self.email,self.password)
+		#user = frappe.get_doc("User",self.email)
+		#user.new_password=self.password
+		#user.save()
+		_update_password(self.email,get_decrypted_password("Driver",self.name))
+		#frappe.msgprint(self.test)
 	def before_insert(self):
 		result = frappe.db.sql("""select name from `tabUser` where name="{}" """.format(self.email),as_list=1)
 		for row in result:
