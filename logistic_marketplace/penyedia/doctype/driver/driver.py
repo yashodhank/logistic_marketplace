@@ -11,7 +11,7 @@ class Driver(Document):
 		user = frappe.get_doc("User",self.email)
 		user.new_password=self.password
 		user.save()
-		_update_password(self.email,self.password)
+		#_update_password(self.email,self.password)
 	def before_insert(self):
 		result = frappe.db.sql("""select name from `tabUser` where name="{}" """.format(self.email),as_list=1)
 		for row in result:
@@ -33,7 +33,7 @@ class Driver(Document):
 			})
 
 		gg.insert()
-		_update_password(self.email,password)
+		#_update_password(self.email,password)
 		perm = frappe.get_doc({
 			"doctype": "User Permission",
 			"user":self.email,
