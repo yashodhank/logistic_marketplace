@@ -8,11 +8,7 @@ from frappe.model.document import Document
 from frappe.utils.password import update_password as _update_password , get_decrypted_password
 class Driver(Document):	
 	def on_update(self):
-		#user = frappe.get_doc("User",self.email)
-		#user.new_password=self.password
-		#user.save()
 		_update_password(self.email,get_decrypted_password("Driver",self.name))
-		#frappe.msgprint(self.test)
 	def before_insert(self):
 		result = frappe.db.sql("""select name from `tabUser` where name="{}" """.format(self.email),as_list=1)
 		for row in result:
@@ -21,7 +17,7 @@ class Driver(Document):
 	def after_insert(self):
 		password = "asd123"
 		if self.password:
-			password = self.password
+			password = get_decrypted_password("Driver",self.name)
 		roles_to_apply=[{"role":"Driver"}]
 		gg = frappe.get_doc({
 			"doctype": "User",
