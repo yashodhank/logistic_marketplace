@@ -20,6 +20,8 @@ frappe.ui.form.on('Principle', {
 								vendor_list+="<p>"+value["for_value"]+"</p>";
 							}
 						})
+						frm.doc.vendor_list=vendor_list;
+						frm.refresh();
 					}
 				}
 			})
