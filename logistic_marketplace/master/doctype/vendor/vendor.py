@@ -32,6 +32,6 @@ class Vendor(Document):
 			"user":self.email,
 			"allow":"Vendor",
 			"for_value":self.name,
-			"apply_for_all_roles":1
+			"apply_for_all_roles":0
 			})
 		perm.insert()
