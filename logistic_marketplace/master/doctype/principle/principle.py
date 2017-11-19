@@ -8,7 +8,9 @@ from frappe.model.document import Document
 from frappe.utils.password import update_password as _update_password , get_decrypted_password
 class Principle(Document):
 	def on_update(self):
-		_update_password(self.email,get_decrypted_password("Principle",self.name))
+		if self.password:
+			_update_password(self.email,get_decrypted_password("Principle",self.name))
+		self.password=""
 	def validate(self):
 		result = frappe.db.sql("""select name from `tabUser` where name="{}" """.format(self.email),as_list=1)
 		for row in result:
@@ -35,6 +37,7 @@ class Principle(Document):
 			"apply_for_all_roles":0
 			})
 		perm.insert()
+		self.password=""
 	def do_add(self):
 		if self.vendor:
 			user_list = frappe.db.sql("""select user from `tabUser Permission` where allow="Principle" and for_value="{}" """.format(self.name),as_dict=1)
