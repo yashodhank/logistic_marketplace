@@ -36,3 +36,5 @@ class Principle(Document):
 			})
 		perm.insert()
 	
+def get_allowed_vendor(user):
+	return frappe.db.sql("""select for_value from `tabUser Permission` where allow="Vendor" and user="{}" """.format(user),as_dict=1)
