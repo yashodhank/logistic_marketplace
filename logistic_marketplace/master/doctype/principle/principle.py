@@ -54,7 +54,8 @@ class Principle(Document):
 					perm.insert()
 			self.vendor_list="""{}<p>{}</p>""".format(self.vendor_list,self.vendor)
 	def do_remove(self):
-		user_list = frappe.db.sql("""select user from `tabUser Permission` where allow="Principle" and for_value="{}" """.format(self.name),as_dict=1)
+		if self.vendor:
+			user_list = frappe.db.sql("""select user from `tabUser Permission` where allow="Principle" and for_value="{}" """.format(self.name),as_dict=1)
 			for row in user_list:
 				frappe.db.sql("""delete from `tabUser Permission` where allow="Vendor" and for_value="{}" and user="{}" """.format(self.vendor,row['user']))
 			new_list = frappe.db.sql("""select for_value from `tabUser Permission` where allow="Vendor" and user="{}" """.format(self.email),as_dict=1)
