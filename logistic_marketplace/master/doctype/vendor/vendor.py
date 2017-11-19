@@ -5,7 +5,7 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
-
+from frappe.utils.password import update_password as _update_password, get_decrypted_password
 class Vendor(Document):
 	def on_update(self):
 		_update_password(self.email,get_decrypted_password("Vendor",self.name))

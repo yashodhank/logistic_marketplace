@@ -7,4 +7,9 @@ import frappe
 from frappe.model.document import Document
 
 class JobOrderUpdate(Document):
-	pass
+	def on_submit(self):
+		if self.status=="5. Proses Bongkar Selesai":
+			jo = frappe.get_doc("Job Order",self.job_order)
+			jo.status="Selesai"
+			jo.save()
+	
