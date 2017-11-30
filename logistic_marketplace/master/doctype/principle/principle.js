@@ -7,6 +7,7 @@ frappe.ui.form.on('Principle', {
 		//frm.set_df_property("password", "read_only", frm.doc.__islocal ? 0 : 1);
 		frm.doc.password="";
 		cur_frm.set_value("password","");
+		if (frm.doc.__islocal==0){
 		frappe.call({
 				method: "logistic_marketplace.master.doctype.principle.principle.get_allowed_vendor",
 				args: {
@@ -27,5 +28,6 @@ frappe.ui.form.on('Principle', {
 					}
 				}
 			})
+		}
 	}
 });

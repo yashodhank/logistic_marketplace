@@ -200,7 +200,7 @@
   }, 
   {
    "allow_bulk_edit": 0, 
-   "allow_on_submit": 0, 
+   "allow_on_submit": 1, 
    "bold": 0, 
    "collapsible": 0, 
    "columns": 0, 
@@ -995,7 +995,7 @@
   }, 
   {
    "allow_bulk_edit": 0, 
-   "allow_on_submit": 0, 
+   "allow_on_submit": 1, 
    "bold": 0, 
    "collapsible": 0, 
    "columns": 0, 
@@ -1026,7 +1026,7 @@
   }, 
   {
    "allow_bulk_edit": 0, 
-   "allow_on_submit": 0, 
+   "allow_on_submit": 1, 
    "bold": 0, 
    "collapsible": 0, 
    "columns": 0, 
@@ -1150,7 +1150,7 @@
   }, 
   {
    "allow_bulk_edit": 0, 
-   "allow_on_submit": 0, 
+   "allow_on_submit": 1, 
    "bold": 0, 
    "collapsible": 0, 
    "columns": 0, 
@@ -1220,7 +1220,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2017-11-19 15:52:36.467224", 
+ "modified": "2017-11-23 15:22:08.463695", 
  "modified_by": "Administrator", 
  "module": "Pengguna", 
  "name": "Job Order", 
