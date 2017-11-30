@@ -91,6 +91,12 @@ LiveMap = Class.extend({
 			"fieldtype": "Link",
 			"options": "Driver",
 			}).$wrapper.find("input");
+			this.elements.driver_status=wrapper.page.add_field({
+			"fieldname":"driver_status",
+			"label": __("Status"),
+			"fieldtype": "Select",
+			"options": "All\nIdle\nOn Duty",
+			}).$wrapper.find("input");
 		}
 		// this.elements.refresh_btn.on("click", function() {
 		// 	me.get_data(this);
@@ -100,20 +106,26 @@ LiveMap = Class.extend({
 		if (loaded==1){
 		var me = this;
 		var dd="All";
+		var ds="All";
 		var pp=this.elements.principle.val();
 		var vv=this.elements.vendorgg.val();
 		if ("driver" in this.elements){
 			dd=this.elements.driver.val();
 		}
+		if ("driver_status" in this.elements){
+			ds=this.elements.driver_status.val();
+		}
 		if (pp==null || pp==""){pp="All"}
 		if (vv==null || vv==""){vv="All"}
 		if (dd==null || dd==""){dd="All"}
+		if (ds==null || ds==""){ds="All"}
 		frappe.call({
 			method: "logistic_marketplace.pengguna.page.live_map.live_map.get_position",
 			args: {
 					principle: pp,
 					vendor: vv,
-					driver:dd
+					driver:dd,
+					driver_status:ds
 			},
 			btn: btn,
 			callback: function(r) {
