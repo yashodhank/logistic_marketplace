@@ -22,7 +22,7 @@ class JobOrderUpdate(Document):
 			s.post(url=url,headers=header,data=json.dumps(content))
 			header = {"Authorization": "key=AAAA7ndto_Q:APA91bHVikGANVsFaK2UEKLVXQEA1cleaeM7DlLLuaA87jEVhBGNTe4t8fi0h5Ttc7jRkoiEkZYlrw7Idsn9S9ZfDFtl1S3H3j21Xs8VXtANCDjycLLkMAyLLdHKaBfi3NYc3Z8VIxo8","Content-Type": "application/json"}
 
-			content = {"to":"/topics/{}".format(self.vendor.replace(" ","_")) , "notification":{"title":self.job_order,"body":"Telah Selesai Oleh {}".format(self.vendor)}, "data":{"job_order":self.job_order}}
+			content = {"to":"/topics/{}".format(self.vendor.replace(" ","_")) , "notification":{"title":self.job_order,"body":"Telah Selesai"}, "data":{"job_order":self.job_order}}
 			s.post(url=url,headers=header,data=json.dumps(content))
 			
 
