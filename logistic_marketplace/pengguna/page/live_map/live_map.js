@@ -96,6 +96,7 @@ LiveMap = Class.extend({
 			"label": __("Status"),
 			"fieldtype": "Select",
 			"options": "All\nIdle\nOn Duty",
+			"default":"All"
 			}).$wrapper.find("input");
 		}
 		// this.elements.refresh_btn.on("click", function() {
