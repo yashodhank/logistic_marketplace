@@ -48,8 +48,7 @@ class JobOrder(Document):
 			#text = "Dear, {} <br/><br/>Principle : {}<br/>Jor Order : {}<br/>Reference No : {}<br/>Vendor : {}".format(row['principle'],row['vendor'],row['name'],row['reference'],row['vendor'])
 			#frappe.sendmail(recipients=email, subject=subject,content = text)
 def notify():
-	list_to = frappe.db.sql("""select HOUR(TIMEDIFF(NOW(),j.modified)) as "lama" ,j.principle , j.name , j.reference , j.modified , j.vendor , j.owner ,v.email
-		from `tabJob Order` j left join `tabVendor` v on j.vendor = v.name where HOUR(TIMEDIFF(NOW(),j.modified)) IN (4,9) order by j.modified """,as_dict=1)
+	list_to = frappe.db.sql("""select HOUR(TIMEDIFF(NOW(),j.modified)) as "lama" ,j.principle , j.name , j.reference , j.modified , j.vendor , j.owner ,v.email	from `tabJob Order` j left join `tabVendor` v on j.vendor = v.name where HOUR(TIMEDIFF(NOW(),j.modified)) IN (4,9) and j.status="Menunggu Persetujuan Vendor" order by j.modified """,as_dict=1)
 	s = get_request_session()
 	url = "https://fcm.googleapis.com/fcm/send"
 	header = {"Authorization": "key=AAAA7ndto_Q:APA91bHVikGANVsFaK2UEKLVXQEA1cleaeM7DlLLuaA87jEVhBGNTe4t8fi0h5Ttc7jRkoiEkZYlrw7Idsn9S9ZfDFtl1S3H3j21Xs8VXtANCDjycLLkMAyLLdHKaBfi3NYc3Z8VIxo8","Content-Type": "application/json"}
