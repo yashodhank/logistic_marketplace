@@ -52,7 +52,7 @@ class JobOrderDetailViewer(Document):
 			image_list = frappe.db.sql("""select file_url from `tabFile` where attached_to_doctype="Job Order Update" and attached_to_name="{}" """.format(row['name']),as_dict=1)
 			img = "<div>"
 			for gg in image_list:
-				gg="""{}<img src="{}" style="padding-right:20px;"/> """.format(img,gg['file_url'])
+				img="""{}<img src="{}" style="padding-right:20px;"/> """.format(img,gg['file_url'])
 			img = "{}</div>".format(img)
 
 			upd="{}<div><strong>{}</strong><br/>At {}<br/>Note :<br/>{}{}<div>".format(upd,row['status'],row['waktu'],row['note'],img)
