@@ -56,7 +56,7 @@ class JobOrderDetailViewer(Document):
 			img = "{}</div>".format(img)
 
 			upd="{}<div><strong>{}</strong><br/>At {}<br/>Note :<br/>{}{}<div>".format(upd,row['status'],row['waktu'],row['note'],img)
-			if row['lat']==0 and row['lo']==0:
+			if row['lat']=="0.0" and row['lo']=="0.0":
 				upd+="<div>GPS Tidak Tersedia Saat Melakukan Update ini</div>"
 			else:
 				upd+="""
