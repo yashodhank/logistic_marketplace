@@ -10,7 +10,7 @@ class JobOrderDetailViewer(Document):
 	pass
 	def view_job_order(self):
 		job_order =frappe.get_doc("Job Order", self.job_order)
-		self.status = job_order.status
+		self.jo_status = job_order.status
 		self.principle =job_order.principle
 		self.reference =job_order.reference
 		self.principle_contact_person=job_order.principle_contact_person
