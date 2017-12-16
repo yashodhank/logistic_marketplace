@@ -49,7 +49,7 @@ class JobOrderDetailViewer(Document):
 		job_order_update = frappe.db.sql("""select name,waktu,note,status,lo,lat,vendor,principle from `tabJob Order Update` where job_order="{}" order by waktu asc """.format(self.job_order),as_dict=1)
 		upd = ""
 		for row in job_order_update:
-			image_list = frappe.db.sql("""select file_url from where attached_to_doctype="Job Order Update" and attached_to_name="{}" """.format(row['name']),as_dict=1)
+			image_list = frappe.db.sql("""select file_url from `tabFile` where attached_to_doctype="Job Order Update" and attached_to_name="{}" """.format(row['name']),as_dict=1)
 			img = "<div>"
 			for gg in image_list:
 				gg="""{}<img src="{}" style="padding-right:20px;"/> """.format(img,gg['file_url'])
