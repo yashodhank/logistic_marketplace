@@ -9,15 +9,14 @@ from frappe.utils.password import update_password as _update_password , get_decr
 class Driver(Document):	
 	def on_update(self):
 		_update_password(self.email,get_decrypted_password("Driver",self.name))
+		self.password=""
 	def before_insert(self):
 		result = frappe.db.sql("""select name from `tabUser` where name="{}" """.format(self.email),as_list=1)
 		for row in result:
 			if row[0]==self.email:
 				frappe.throw("Email Already Used {}".format(row[0]))
 	def after_insert(self):
-		password = "asd123"
-		if self.password:
-			password = get_decrypted_password("Driver",self.name)
+		password = get_decrypted_password("Driver",self.name)
 		roles_to_apply=[{"role":"Driver"}]
 		gg = frappe.get_doc({
 			"doctype": "User",
