@@ -26,9 +26,8 @@ def get_data():
 			"label": _("Pengguna")
 		},
 		{
-			"module_name": "Job Order",
+			"label": "Job Order Detail Viewer",
 			"icon": "octicon octicon-broadcast",
-			"type": "module",
 			"_doctype": "Job Order Detail Viewer",
 			"type": "link",
 			"link": "Form/Job Order Detail Viewer/Job Order Detail Viewer"
