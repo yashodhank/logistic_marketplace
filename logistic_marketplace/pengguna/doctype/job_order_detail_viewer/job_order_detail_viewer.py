@@ -56,7 +56,10 @@ class JobOrderDetailViewer(Document):
 			img = "{}</div>".format(img)
 
 			upd="{}<div><strong>{}</strong><br/>At {}<br/>Note :<br/>{}{}<div>".format(upd,row['status'],row['waktu'],row['note'],img)
-			upd+="""
+			if row['lat']==0 and row['lo']==0:
+				upd+="<div>GPS Tidak Tersedia Saat Melakukan Update ini</div>"
+			else:
+				upd+="""
 			<div>
 <iframe 
   width="300" 
@@ -65,19 +68,9 @@ class JobOrderDetailViewer(Document):
   scrolling="no" 
   marginheight="0" 
   marginwidth="0" 
-  src="https://maps.google.com/maps?q={"""+row['lat']+","+row['lo']+"""}&hl=es;z=14&amp;output=embed"
+  src="https://maps.google.com/maps?q="""+row['lat']+","+row['lo']+"""&hl=es;z=14&amp;output=embed"
  >
  </iframe>
- <br />
- <small>
-   <a 
-    href="https://maps.google.com/maps?q={"""+row['lat']+","+row['lo']+"""}&hl=es;z=14&amp;output=embed" 
-    style="color:#0000FF;text-align:left" 
-    target="_blank"
-   >
-     See map bigger
-   </a>
- </small>
 			</div>"""
 
 		self.job_order_history=upd
