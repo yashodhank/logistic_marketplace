@@ -56,7 +56,7 @@ class JobOrderDetailViewer(Document):
 			img = "{}</div>".format(img)
 
 			upd="{}<div><strong>{}</strong><br/>At {}<br/>Note :<br/>{}{}<div>".format(upd,row['status'],row['waktu'],row['note'],img)
-			upd="""{}
+			upd+="""
 			<div>
 <iframe 
   width="300" 
@@ -65,19 +65,19 @@ class JobOrderDetailViewer(Document):
   scrolling="no" 
   marginheight="0" 
   marginwidth="0" 
-  src="https://maps.google.com/maps?q={{},{}}&hl=es;z=14&amp;output=embed"
+  src="https://maps.google.com/maps?q={"""+row['lat']+","+row['lo']+"""}&hl=es;z=14&amp;output=embed"
  >
  </iframe>
  <br />
  <small>
    <a 
-    href="https://maps.google.com/maps?q={{},{}}&hl=es;z=14&amp;output=embed" 
+    href="https://maps.google.com/maps?q={"""+row['lat']+","+row['lo']+"""}&hl=es;z=14&amp;output=embed" 
     style="color:#0000FF;text-align:left" 
     target="_blank"
    >
      See map bigger
    </a>
  </small>
-			</div>""".format(upd,row['lat'],row['lo'],row['lat'],row['lo'])
+			</div>"""
 
 		self.job_order_history=upd
