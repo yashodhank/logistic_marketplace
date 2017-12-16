@@ -2,7 +2,7 @@ from frappe import _
 
 def get_data():
 	return {
-		'heatmap': True,
+		'heatmap': False,
 		'heatmap_message': _('This is List of Documents Related'),
 		'fieldname': 'job_order',
 		'transactions': [

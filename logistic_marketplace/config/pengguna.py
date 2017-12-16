@@ -37,6 +37,11 @@ def get_data():
 					"type":"page",
 					"name":"live-map",
 					"label":"Live Map"
+				},
+				{
+					"type":"doctype",
+					"name":"Job Order Detail Viewer",
+					"label":"Job Order Detail Viewer"
 				}
 				
 			]

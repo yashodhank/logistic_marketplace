@@ -24,5 +24,14 @@ def get_data():
 			"icon": "octicon octicon-gist-secret",
 			"type": "module",
 			"label": _("Pengguna")
+		},
+		{
+			"module_name": "Job Order",
+			"icon": "octicon octicon-broadcast",
+			"type": "module",
+			"_doctype": "Job Order Detail Viewer",
+			"type": "link",
+			"link": "Form/Job Order Detail Viewer/Job Order Detail Viewer"
 		}
+
 	]
