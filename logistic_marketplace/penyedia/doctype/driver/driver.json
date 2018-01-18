@@ -387,7 +387,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2017-11-11 23:53:33.080975", 
+ "modified": "2018-01-17 21:20:40.545353", 
  "modified_by": "Administrator", 
  "module": "Penyedia", 
  "name": "Driver", 
@@ -459,8 +459,8 @@
  "read_only": 0, 
  "read_only_onload": 0, 
  "show_name_in_global_search": 0, 
- "sort_field": "modified", 
- "sort_order": "DESC", 
+ "sort_field": "nama", 
+ "sort_order": "ASC", 
  "track_changes": 0, 
  "track_seen": 0
 }
