@@ -130,7 +130,8 @@ MapLastUpdate = Class.extend({
 			infoWindowContent.push(['<div class="info_content">' +
 				'<h3>'+ info.job_order+'</h3>' +
 				'<p>Principle : '+info.principle+'</p>'+
-				'<p>Vendor : '+info.vendor+'</p></div>']);
+				'<p>Vendor : '+info.vendor+'</p>'+
+				'<p>At : '+info.waktu_a+'</p>'+'</div>']);
 		}
 			
 		// Display multiple markers on a map

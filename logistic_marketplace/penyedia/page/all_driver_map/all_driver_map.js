@@ -123,7 +123,7 @@ AllDriverMap = Class.extend({
 				'<p>Nama : '+info.nama+'</p>'+
 				'<p>Phone : '+info.phone+'</p>'+
 				'<p>Status : '+info.status+'</p>'+
-				'<p>Last Update : '+info.last_update+'</p></div>']);
+				'<p>Last Update : '+info.waktu+'</p></div>']);
 		}
 			
 		// Display multiple markers on a map

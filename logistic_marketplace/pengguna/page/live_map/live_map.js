@@ -167,7 +167,8 @@ LiveMap = Class.extend({
 				'<h3>'+ info.job_order+'</h3>' +
 				'<p>Driver : '+info.driver+'</p>'+
 				'<p>Principle : '+info.principle+'</p>'+
-				'<p>Vendor : '+info.vendor+'</p></div>']);
+				'<p>Vendor : '+info.vendor+'</p>' +
+				'<p>Last Update : '+info.waktu+'</p></div>']);
 		}
 			
 		// Display multiple markers on a map
