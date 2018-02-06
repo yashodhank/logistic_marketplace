@@ -21,10 +21,42 @@ class JobOrder(Document):
 				s = get_request_session()
 				url = "https://fcm.googleapis.com/fcm/send"
 				header = {"Authorization": "key=AAAAnuCvOxY:APA91bGdCn20mHlHrWEpGiNsiSmb36HEG0QmZ-L7U_iG8eOjm9btCFUgYn8klNStKetvEA1eFdiEmaopdScVk-jv_HNvnLwq4m1VI8LdrIueh9NFI6p5hVjdxs73THqvcRFQ8tZjtv61","Content-Type": "application/json"}
-				content = {"to":"/topics/{}".format(self.driver.replace(" ","_").replace("@","_")) , "notification":{"title":self.name,"body":"Job Order {} di tugaskan".format(self.vendor),"sound":"default"}, "data":{"job_order":self.name}}
+				content = {
+					"to":"/topics/{}".format(self.driver.replace(" ","_").replace("@","_")),
+					"data": 
+						{
+							#notification
+							"title":self.name,
+							"body":"Job Order {} di tugaskan".format(self.vendor),
+
+							#data
+							"job_order":self.name,
+							"action":"NEW ASSIGNED JO"
+						}
+				}
 				s.post(url=url,headers=header,data=json.dumps(content))
 
 			frappe.db.sql("""update `tabDriver` set status="{}" where name="{}" """.format(found,self.driver),as_list=1)
+		if self.status=="Di Tolak":			
+			s = get_request_session()
+			url = "https://fcm.googleapis.com/fcm/send"
+			header = {"Authorization": "key=AAAA66ppyJE:APA91bFDQd8klnCXe-PTgLUkUD7x4p9UAxW91NbqeTN9nbX7-GmJMlsnQ2adDd84-rl6LqKnD7KLSeM9xBmADnPuRh0YadoQKux7IrZ27tsjVzvzlFDoXuOnZRP7eXrf0k51QGGifLGw","Content-Type": "application/json"}
+			content ={
+				"to":"/topics/{}".format(self.principle.replace(" ","_").replace("@","")),
+				"data":
+					{
+						#notification
+						"title":self.name,
+						"body":"Job Order {} di tolak oleh {}".format(self.name,self.vendor),
+
+						#data
+						"job_order":self.name,
+						"action":"REJECTED"
+					}
+			}
+			s.post(url=url,headers=header,data=json.dumps(content))
+
+			#frappe.db.sql("""update `tabDriver` set status="{}" where name="{}" """.format(found,self.driver),as_list=1)
 			#frappe.msgprint("updated")
 	def validate(self):
 		if self.truck and self.strict==1:
@@ -35,7 +67,7 @@ class JobOrder(Document):
 		list_to = frappe.db.sql("""select email from `tabVendor` where name="{}" """.format(self.vendor),as_dict=1)
 		s = get_request_session()
 		url = "https://fcm.googleapis.com/fcm/send"
-		header = {"Authorization": "key=AAAA7ndto_Q:APA91bHVikGANVsFaK2UEKLVXQEA1cleaeM7DlLLuaA87jEVhBGNTe4t8fi0h5Ttc7jRkoiEkZYlrw7Idsn9S9ZfDFtl1S3H3j21Xs8VXtANCDjycLLkMAyLLdHKaBfi3NYc3Z8VIxo8","Content-Type": "application/json"}
+		header = {"Authorization": "key=AAAA66ppyJE:APA91bFDQd8klnCXe-PTgLUkUD7x4p9UAxW91NbqeTN9nbX7-GmJMlsnQ2adDd84-rl6LqKnD7KLSeM9xBmADnPuRh0YadoQKux7IrZ27tsjVzvzlFDoXuOnZRP7eXrf0k51QGGifLGw","Content-Type": "application/json"}
 		for row in list_to:
 			email = row['email']
 			if email == "Administrator":
@@ -43,7 +75,19 @@ class JobOrder(Document):
 			subject=""
 			subject="Job Order baru dari {}".format(self.principle)
 			msg = "{} <{}> telah di berikan oleh {}".format(self.name,self.reference,self.principle)
-			content = {"to":"/topics/{}".format(self.vendor.replace(" ","_")) , "notification":{"title":self.name,"body":msg,"sound":"default"}, "data":{"job_order":self.name}}
+			content = {
+				"to":"/topics/{}".format(self.vendor.replace(" ","_")),
+				"data":
+					{
+						#notification
+						"title":self.name,
+						"body":msg,
+
+						#data
+						"job_order":self.name,
+						"action":"NEW JO"
+					}
+			}
 			s.post(url=url,headers=header,data=json.dumps(content))
 			#text = "Dear, {} <br/><br/>Principle : {}<br/>Jor Order : {}<br/>Reference No : {}<br/>Vendor : {}".format(row['principle'],row['vendor'],row['name'],row['reference'],row['vendor'])
 			#frappe.sendmail(recipients=email, subject=subject,content = text)
@@ -62,8 +106,21 @@ def notify():
 			msg = "{} <{}> belum di terima lebih dari 4 jam".format(row['name'],row['reference'])
 		else:
 			subject="Job Order belum di terima lebih dari 9 jam"
-			msg = "{} <{}> belum di terima lebih dari 4 jam".format(row['name'],row['reference'])
-		content = {"to":"/topics/{}".format(row['vendor'].replace(" ","_")) , "notification":{"title":row["name"],"body":msg,"sound":"default"}, "data":{"job_order":row["name"]}}
+			msg = "{} <{}> belum di terima lebih dari 9 jam".format(row['name'],row['reference'])
+		content = {
+			"to":"/topics/{}".format(row['vendor'].replace(" ","_")),
+			"data":
+			{
+				#notification
+				"title":row["name"],
+				"body":msg,
+
+				#data
+				"job_order":row["name"],
+				"value":row["lama"],
+				"ACTION":"RTO JO"
+			}
+		}
 		s.post(url=url,headers=header,data=json.dumps(content))
 		#text = "Dear, {} <br/><br/>Principle : {}<br/>Jor Order : {}<br/>Reference No : {}<br/>Vendor : {}".format(row['principle'],row['vendor'],row['name'],row['reference'],row['vendor'])
 		#frappe.sendmail(recipients=email, subject=subject,content = text)
