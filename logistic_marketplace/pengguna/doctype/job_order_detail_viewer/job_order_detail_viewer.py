@@ -74,3 +74,4 @@ class JobOrderDetailViewer(Document):
 			</div>"""
 
 		self.job_order_history=upd
+		self.save()
