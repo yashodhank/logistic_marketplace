@@ -79,13 +79,14 @@ boot_session = "logistic_marketplace.boot.boot_session"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-#	}
-# }
+doc_events = {
+	"Communication": {
+		"after_insert": "logistic_marketplace.pengguna.doctype.job_order.job_order.chat"
+	},
+	"Driver Background Update": {
+		"after_insert": "logistic_marketplace.penyedia.doctype.driver_background_update.driver_background_update.gps_update"
+	}
+}
 
 # Scheduled Tasks
 # ---------------

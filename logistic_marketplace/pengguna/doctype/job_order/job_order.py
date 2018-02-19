@@ -132,4 +132,78 @@ def test_notify():
 	content = {"to":"/topics/PT_CocaCola_Amatil_Indonesia","notification":{"title":"title","body":"body"}, "data":{"job_order":"JO-20171000037"}}
 	gg =  s.post(url=url,headers=header,data=json.dumps(content))
 	print gg.content
+
+def chat(self, method):
+	if self.reference_doctype!="Job Order":
+		return
+	if self.comment_type!="Comment":
+		return
+	data  = frappe.db.sql("""select principle, vendor, driver from `tabJob Order` where name='{}' """.format(self.reference_name),as_list=1)
+	
+
+	if (len(data) > 0):
+		users = data[0]
+
+		#principle
+		# s = get_request_session()
+		# url = "https://fcm.googleapis.com/fcm/send"
+		# header = {"Authorization": "key=AAAA66ppyJE:APA91bFDQd8klnCXe-PTgLUkUD7x4p9UAxW91NbqeTN9nbX7-GmJMlsnQ2adDd84-rl6LqKnD7KLSeM9xBmADnPuRh0YadoQKux7IrZ27tsjVzvzlFDoXuOnZRP7eXrf0k51QGGifLGw","Content-Type": "application/json"}
+		# content = {
+		# 	"to":"/topics/{}".format(users[0].replace(" ","_")),
+		# 	"data":
+		# 		{
+		# 			#notification
+		# 			"title":"Pesan dari {}".format(self.sender_full_name),
+		# 			"body":"{}".format(self.content),
+
+		# 			#data
+		# 			"job_order":"{}".format(self.reference_name),
+		# 			"sender":"{}".format(self.sender_full_name),
+		# 			"action":"CHAT JOB ORDER"
+		# 		}
+		# }
+		# s.post(url=url,headers=header,data=json.dumps(content))
+
+		#vendor
+		s = get_request_session()
+		url = "https://fcm.googleapis.com/fcm/send"
+		header = {"Authorization": "key=AAAA7ndto_Q:APA91bHVikGANVsFaK2UEKLVXQEA1cleaeM7DlLLuaA87jEVhBGNTe4t8fi0h5Ttc7jRkoiEkZYlrw7Idsn9S9ZfDFtl1S3H3j21Xs8VXtANCDjycLLkMAyLLdHKaBfi3NYc3Z8VIxo8","Content-Type": "application/json"}
+		content = {
+			"to":"/topics/{}".format(users[1].replace(" ","_")),
+			"data":
+				{
+					#notification
+					"title":"Pesan dari {}".format(self.sender_full_name),
+					"body":"{}".format(self.content),
+
+					#data
+					"job_order":"{}".format(self.reference_name),
+					"sender":"{}".format(self.sender_full_name),
+					"action":"CHAT JOB ORDER"
+				}
+		}
+		s.post(url=url,headers=header,data=json.dumps(content))
+
+		#driver
+		s = get_request_session()
+		url = "https://fcm.googleapis.com/fcm/send"
+		header = {"Authorization": "key=AAAAnuCvOxY:APA91bGdCn20mHlHrWEpGiNsiSmb36HEG0QmZ-L7U_iG8eOjm9btCFUgYn8klNStKetvEA1eFdiEmaopdScVk-jv_HNvnLwq4m1VI8LdrIueh9NFI6p5hVjdxs73THqvcRFQ8tZjtv61","Content-Type": "application/json"}
+		content = {
+			"to":"/topics/{}".format(users[2].replace(" ","_").replace("@","_")),
+			"data": 
+				{
+					#notification
+					"title":"Pesan dari {}".format(self.sender_full_name),
+					"body":"{}".format(self.content),
+
+					#data
+					"job_order":"{}".format(self.reference_name),
+					"sender":"{}".format(self.sender_full_name), 
+					"action":"CHAT JOB ORDER"
+				}
+		}
+		s.post(url=url,headers=header,data=json.dumps(content))
+
+		
+
 		
