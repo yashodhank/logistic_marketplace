@@ -6,6 +6,5 @@ frappe.ui.form.on('Job Order', {
 
 	},
 	onload:function(frm) {
-		alert(1);
 	}
 });
