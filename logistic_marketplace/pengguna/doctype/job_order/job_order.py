@@ -10,6 +10,36 @@ from frappe.utils import get_request_session
 
 class JobOrder(Document):
 	pass
+	def view_job_order(self):
+		job_order_update = frappe.db.sql("""select name,DATE_FORMAT(waktu,"%d-%m-%Y %H:%i") as "waktu",note,status,lo,lat,owner,vendor,principle from `tabJob Order Update` where job_order="{}" order by waktu asc """.format(self.name),as_dict=1)
+		upd = ""
+		for row in job_order_update:
+			image_list = frappe.db.sql("""select file_url from `tabFile` where attached_to_doctype="Job Order Update" and attached_to_name="{}" """.format(row['name']),as_dict=1)
+			img = "<div>"
+			for gg in image_list:
+				img="""{}<img src="{}" style="padding-right:20px;"/> """.format(img,gg['file_url'])
+			img = "{}</div>".format(img)
+
+			upd="{}<div><strong>{}</strong><br/>At {}<br/>Note :<br/>{}<br/>Done by : {}{}<div>".format(upd,row['status'],row['waktu'],row['note'],row['owner'],img)
+			if row['lat']=="0.0" and row['lo']=="0.0":
+				upd+="<div>GPS Tidak Tersedia Saat Melakukan Update ini</div>"
+			else:
+				upd+="""
+			<div>
+<iframe 
+  width="300" 
+  height="170" 
+  frameborder="0" 
+  scrolling="no" 
+  marginheight="0" 
+  marginwidth="0" 
+  src="https://maps.google.com/maps?q="""+row['lat']+","+row['lo']+"""&hl=es;z=14&amp;output=embed"
+ >
+ </iframe>
+			</div>"""
+
+		self.job_order_history=upd
+		self.save()
 	def on_update_after_submit(self):
 		#frappe.msgprint(self.driver)
 		if self.driver:

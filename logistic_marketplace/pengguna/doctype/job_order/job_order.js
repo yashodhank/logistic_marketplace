@@ -4,5 +4,8 @@
 frappe.ui.form.on('Job Order', {
 	refresh: function(frm) {
 
+	},
+	onload:function(frm) {
+		alert(1);
 	}
 });
