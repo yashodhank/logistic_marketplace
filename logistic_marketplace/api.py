@@ -23,6 +23,10 @@ def get_job_order(status='',principle='',vendor='',driver='',ref='%%',start=0):
 		row['routes'] = frappe.db.sql("select * from `tabJob Order Route` where parent='{}'".format(row.name),as_dict=1)
 	return data
 
+@frappe.whitelist(allow_guest=False)
+def get_image_jo_update(jod_name=''):
+	request_attachments = frappe.db.sql("SELECT file_url FROM `tabFile` WHERE attached_to_doctype = 'Job Order Update' AND attached_to_name = '{}'".format(jod_name), as_dict=True)
+	return request_attachments
 
 
 @frappe.whitelist(allow_guest=False)
@@ -44,7 +48,7 @@ def get_job_order_count(role='',id=''):
 
 	data = dict()
 	for stat in status:
-		data[stat] = frappe.db.sql("SELECT COUNT(name) as count FROM `tabJob Order` WHERE {}='{}' AND status='{}' ORDER BY modified".format(role,id,stat),as_dict=1)[0]
+		data[stat] = frappe.db.sql("SELECT COUNT(name) as count FROM `tabJob Order` WHERE {}='{}' AND docstatus = 1 AND status='{}' ORDER BY modified".format(role,id,stat),as_dict=1)[0]
 	return data
 
 
