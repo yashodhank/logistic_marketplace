@@ -11,11 +11,11 @@ class Principle(Document):
 		if self.password:
 			_update_password(self.email,get_decrypted_password("Principle",self.name))
 		self.password=""
-	def validate(self):
-		result = frappe.db.sql("""select name from `tabUser` where name="{}" """.format(self.email),as_list=1)
-		for row in result:
-			if row[0]==self.email:
-				frappe.throw("Email Already Used {}".format(row[0]))
+	#def validate(self):
+		#result = frappe.db.sql("""select name from `tabUser` where name="{}" """.format(self.email),as_list=1)
+		#for row in result:
+		#	if row[0]==self.email:
+		#		frappe.throw("Email Already Used {}".format(row[0]))
 	def after_insert(self):
 		password = get_decrypted_password("Principle",self.name)
 		roles_to_apply=[{"role":"Principle"}]
@@ -43,7 +43,7 @@ class Principle(Document):
 			user_list = frappe.db.sql("""select user from `tabUser Permission` where allow="Principle" and for_value="{}" """.format(self.name),as_dict=1)
 			for row in user_list:
 				add=1
-				exist = frappe.db.sql("""select user from `tabUser Permission` where allow="Vendor" and for_value="{}" """.format(self.vendor),as_dict=1)
+				exist = frappe.db.sql("""select user from `tabUser Permission` where allow="Vendor" and for_value="{}" and user="{}" """.format(self.vendor,row['user']),as_dict=1)
 				for invalid in exist:
 					add=0
 				if add==1:
@@ -54,7 +54,7 @@ class Principle(Document):
 						"for_value":self.vendor,
 						"apply_for_all_roles":0
 					})
-					perm.insert()
+					perm.insert(ignore_permissions=True)
 			self.vendor_list="""{}<p>{}</p>""".format(self.vendor_list,self.vendor)
 	def do_remove(self):
 		if self.vendor:

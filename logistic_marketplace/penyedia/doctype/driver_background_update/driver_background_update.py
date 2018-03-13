@@ -32,6 +32,8 @@ def gps_update(self, method):
 			"to":"/topics/{}".format(users[0].replace(" ","_")),
 			"data":
 				{
+					"subject":"{}".format(users[0].replace(" ","_")),
+					
 					#notification
 					"title":"Perubahan GPS dari {}".format(self.driver),
 

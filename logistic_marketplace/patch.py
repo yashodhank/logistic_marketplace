@@ -20,3 +20,24 @@ def delete():
 	frappe.db.sql("""delete from `tabJob Order` where principle="{}" """.format(principle),as_list=1)
  	frappe.db.sql("""delete from `tabJob Order Update` where parent IN (select name from `tabJob Order Update Image` where principle="{}") """.format(principle),as_list=1)
 	frappe.db.sql("""delete from `tabJob Order Update` where principle="{}" """.format(principle),as_list=1)
+
+def delete_principle():
+	principle="PT Nestle Indonesia"
+	jou = frappe.db.sql("""select name,docstatus from `tabJob Order Update` where principle="{}" """.format(principle),as_list=1)
+	for row in jou:
+		doc = frappe.get_doc("Job Order Update",row[0])
+		if row[1]==1:
+			doc.cancel()
+			doc.delete()
+		else:
+			doc.delete()
+		frappe.db.commit()
+	list = frappe.db.sql("""select name,docstatus from `tabJob Order` where principle="{}" """.format(principle),as_list=1)
+	for row in list:
+		doc = frappe.get_doc("Job Order",row[0])
+		if row[1]==1:
+			doc.cancel()
+			doc.delete()
+		else:
+			doc.delete()
+		frappe.db.commit()

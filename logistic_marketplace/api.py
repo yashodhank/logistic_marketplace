@@ -7,26 +7,61 @@ import os
 
 
 @frappe.whitelist(allow_guest=False)
-def get_job_order(status='',principle='',vendor='',driver='',ref='%%',start=0):
+def get_job_order(status='',principle='',vendor='',driver='',ref='%',start=0):
 	filters = frappe.local.form_dict
 	if principle != '':
-		data = frappe.db.sql("SELECT * FROM `tabJob Order` WHERE status='{}' AND principle='{}' AND reference LIKE '{}' AND docstatus = 1 ORDER BY modified DESC LIMIT 20 OFFSET {}".format(status,principle,ref,start),as_dict=1)
+		data = frappe.db.sql("SELECT * FROM `tabJob Order` WHERE status='{}' AND principle='{}' AND (LOWER(reference) LIKE LOWER('{}') OR LOWER(name) LIKE LOWER('{}')) AND docstatus = 1 ORDER BY modified DESC LIMIT 20 OFFSET {}".format(status,principle,ref,ref,start),as_dict=1)
 	elif vendor != '':
-		data = frappe.db.sql("SELECT * FROM `tabJob Order` WHERE status='{}' AND vendor='{}' AND reference LIKE '{}' AND docstatus = 1 ORDER BY modified DESC LIMIT 20 OFFSET {}".format(status,vendor,ref,start),as_dict=1)
+		data = frappe.db.sql("SELECT * FROM `tabJob Order` WHERE status='{}' AND vendor='{}' AND (LOWER(reference) LIKE LOWER('{}') OR LOWER(name) LIKE LOWER('{}')) AND docstatus = 1 ORDER BY modified DESC LIMIT 20 OFFSET {}".format(status,vendor,ref,ref,start),as_dict=1)
 	elif driver != '':
-		data = frappe.db.sql("SELECT * FROM `tabJob Order` WHERE status='{}' AND driver='{}' AND reference LIKE '{}' AND docstatus = 1 ORDER BY modified DESC LIMIT 20 OFFSET {}".format(status,driver,ref,start),as_dict=1)
+		data = frappe.db.sql("SELECT * FROM `tabJob Order` WHERE status='{}' AND driver='{}' AND (LOWER(reference) LIKE LOWER('{}') OR LOWER(name) LIKE LOWER('{}')) AND docstatus = 1 ORDER BY modified DESC LIMIT 20 OFFSET {}".format(status,driver,ref,ref,start),as_dict=1)
 	# data = frappe.get_list("Job Order",filters={ 
 	# 	'status':status,
 	# 	'principle':principle
 	# 	},fields=["*"],order_by='modified')
+	
+
 	for row in data:
 		row['routes'] = frappe.db.sql("select * from `tabJob Order Route` where parent='{}'".format(row.name),as_dict=1)
+		
+		fetch_principle = frappe.db.sql("SELECT email FROM `tabPrinciple` WHERE nama ='{}'".format(row.principle), as_list=True)
+		if (len(fetch_principle) > 0):
+			user_principle = fetch_principle[0][0]
+			fetch_principle_image = frappe.db.sql("SELECT file_url FROM `tabFile` WHERE attached_to_doctype = 'User' AND attached_to_name = '{}'".format(user_principle), as_list=True)
+			if (len(fetch_principle_image) > 0):
+				row['principle_image'] = fetch_principle_image[0]
+			else:
+				row['principle_image'] = list("")
+
+		fetch_vendor = frappe.db.sql("SELECT email FROM `tabVendor` WHERE nama ='{}'".format(row.vendor), as_list=True)
+		if (len(fetch_vendor) > 0):
+			user_vendor = fetch_vendor[0][0]
+			fetch_vendor_image = frappe.db.sql("SELECT file_url FROM `tabFile` WHERE attached_to_doctype = 'User' AND attached_to_name = '{}'".format(user_vendor), as_list=True)
+			if (len(fetch_vendor_image) > 0):
+				row['vendor_image'] = fetch_vendor_image[0]
+			else:
+				row['vendor_image'] = list("")
 	return data
+
+@frappe.whitelist(allow_guest=False)
+def get_job_order_update(job_order=""):
+	data = frappe.db.sql("SELECT * FROM `tabJob Order Update` WHERE job_order = '{}' AND docstatus = 1 ORDER BY creation DESC".format(job_order),as_dict=1)
+	if (len(data) > 0):
+		for row in data:
+			row['image_count'] = frappe.db.sql("SELECT file_url FROM `tabFile` WHERE attached_to_doctype = 'Job Order Update' AND attached_to_name = '{}'".format(row['name']),as_dict=True)
+		return data
+	else:
+		return []
 
 @frappe.whitelist(allow_guest=False)
 def get_image_jo_update(jod_name=''):
 	request_attachments = frappe.db.sql("SELECT file_url FROM `tabFile` WHERE attached_to_doctype = 'Job Order Update' AND attached_to_name = '{}'".format(jod_name), as_dict=True)
 	return request_attachments
+
+# @frappe.whitelist(allow_guest=False)
+# def get_image_user(user=''):
+# 	request_attachments = frappe.db.sql("SELECT file_url FROM `tabFile` WHERE attached_to_doctype = 'User' AND attached_to_name = '{}'".format(user), as_list=True)
+# 	return request_attachments
 
 
 @frappe.whitelist(allow_guest=False)
@@ -34,6 +69,7 @@ def get_job_order_by(name=''):
 	data = frappe.db.sql("SELECT * FROM `tabJob Order` WHERE name='{}' ORDER BY modified DESC LIMIT 1".format(name),as_dict=1)
 	for row in data:
 		row['routes'] = frappe.db.sql("select * from `tabJob Order Route` where parent='{}'".format(row.name),as_dict=1)
+		row['image_file_url'] = frappe.db.sql("SELECT file_url FROM `tabFile` WHERE attached_to_doctype = 'User' AND attached_to_name = 'digitruk@id.nestle.com'", as_list=True)[0]
 	return data
 
 @frappe.whitelist(allow_guest=False)

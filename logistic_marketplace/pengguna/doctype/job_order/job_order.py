@@ -10,7 +10,7 @@ from frappe.utils import get_request_session
 
 class JobOrder(Document):
 	pass
-	def view_job_order(self):
+	def onload(self):
 		job_order_update = frappe.db.sql("""select name,DATE_FORMAT(waktu,"%d-%m-%Y %H:%i") as "waktu",note,status,lo,lat,owner,vendor,principle from `tabJob Order Update` where job_order="{}" order by waktu asc """.format(self.name),as_dict=1)
 		upd = ""
 		for row in job_order_update:
@@ -39,7 +39,9 @@ class JobOrder(Document):
 			</div>"""
 
 		self.job_order_history=upd
-		self.save()
+		#self.save()
+		frappe.db.sql("""update `tabJob Order` set job_order_history='{}' where name="{}" """.format(upd,self.name),as_list=1)
+		frappe.db.commit()
 	def on_update_after_submit(self):
 		#frappe.msgprint(self.driver)
 		if self.driver:
@@ -55,13 +57,15 @@ class JobOrder(Document):
 					"to":"/topics/{}".format(self.driver.replace(" ","_").replace("@","_")),
 					"data": 
 						{
+							"subject":"{}".format(self.driver.replace(" ","_").replace("@","_")),
+
 							#notification
 							"title":self.name,
 							"body":"Job Order {} di tugaskan".format(self.vendor),
 
 							#data
 							"job_order":self.name,
-							"action":"NEW ASSIGNED JO"
+							"action":"NEW_ASSIGNED_JO"
 						}
 				}
 				s.post(url=url,headers=header,data=json.dumps(content))
@@ -75,6 +79,8 @@ class JobOrder(Document):
 				"to":"/topics/{}".format(self.principle.replace(" ","_").replace("@","")),
 				"data":
 					{
+						"subject":"{}".format(self.principle.replace(" ","_").replace("@","")),
+
 						#notification
 						"title":self.name,
 						"body":"Job Order {} di tolak oleh {}".format(self.name,self.vendor),
@@ -97,7 +103,7 @@ class JobOrder(Document):
 		list_to = frappe.db.sql("""select email from `tabVendor` where name="{}" """.format(self.vendor),as_dict=1)
 		s = get_request_session()
 		url = "https://fcm.googleapis.com/fcm/send"
-		header = {"Authorization": "key=AAAA66ppyJE:APA91bFDQd8klnCXe-PTgLUkUD7x4p9UAxW91NbqeTN9nbX7-GmJMlsnQ2adDd84-rl6LqKnD7KLSeM9xBmADnPuRh0YadoQKux7IrZ27tsjVzvzlFDoXuOnZRP7eXrf0k51QGGifLGw","Content-Type": "application/json"}
+		header = {"Authorization": "key=AAAA7ndto_Q:APA91bHVikGANVsFaK2UEKLVXQEA1cleaeM7DlLLuaA87jEVhBGNTe4t8fi0h5Ttc7jRkoiEkZYlrw7Idsn9S9ZfDFtl1S3H3j21Xs8VXtANCDjycLLkMAyLLdHKaBfi3NYc3Z8VIxo8","Content-Type": "application/json"}
 		for row in list_to:
 			email = row['email']
 			if email == "Administrator":
@@ -109,13 +115,15 @@ class JobOrder(Document):
 				"to":"/topics/{}".format(self.vendor.replace(" ","_")),
 				"data":
 					{
+						"subject":"{}".format(self.vendor.replace(" ","_")),
+
 						#notification
 						"title":self.name,
 						"body":msg,
 
 						#data
 						"job_order":self.name,
-						"action":"NEW JO"
+						"action":"NEW_JO"
 					}
 			}
 			s.post(url=url,headers=header,data=json.dumps(content))
@@ -141,6 +149,8 @@ def notify():
 			"to":"/topics/{}".format(row['vendor'].replace(" ","_")),
 			"data":
 			{
+				"subject":"{}".format(row['vendor'].replace(" ","_")),
+
 				#notification
 				"title":row["name"],
 				"body":msg,
@@ -148,7 +158,7 @@ def notify():
 				#data
 				"job_order":row["name"],
 				"value":row["lama"],
-				"ACTION":"RTO JO"
+				"ACTION":"RTO_JO"
 			}
 		}
 		s.post(url=url,headers=header,data=json.dumps(content))
@@ -183,7 +193,7 @@ def chat(self, method):
 		# 	"data":
 		# 		{
 		# 			#notification
-		# 			"title":"Pesan dari {}".format(self.sender_full_name),
+					# "title":"{} - Pesan dari {}".format(self.reference_name,self.sender_full_name),
 		# 			"body":"{}".format(self.content),
 
 		# 			#data
@@ -202,8 +212,10 @@ def chat(self, method):
 			"to":"/topics/{}".format(users[1].replace(" ","_")),
 			"data":
 				{
+					"subject":"{}".format(users[1].replace(" ","_")),
+
 					#notification
-					"title":"Pesan dari {}".format(self.sender_full_name),
+					"title":"{} - Pesan dari {}".format(self.reference_name,self.sender_full_name),
 					"body":"{}".format(self.content),
 
 					#data
@@ -215,6 +227,9 @@ def chat(self, method):
 		s.post(url=url,headers=header,data=json.dumps(content))
 
 		#driver
+		fetchDriver = frappe.db.sql("""SELECT nama FROM `tabDriver` WHERE name='{}'""".format(users[2]),as_list=1)
+		dataDriver = fetchDriver[0]
+		driverName = dataDriver[0]
 		s = get_request_session()
 		url = "https://fcm.googleapis.com/fcm/send"
 		header = {"Authorization": "key=AAAAnuCvOxY:APA91bGdCn20mHlHrWEpGiNsiSmb36HEG0QmZ-L7U_iG8eOjm9btCFUgYn8klNStKetvEA1eFdiEmaopdScVk-jv_HNvnLwq4m1VI8LdrIueh9NFI6p5hVjdxs73THqvcRFQ8tZjtv61","Content-Type": "application/json"}
@@ -222,8 +237,10 @@ def chat(self, method):
 			"to":"/topics/{}".format(users[2].replace(" ","_").replace("@","_")),
 			"data": 
 				{
+					"subject":"{}".format(users[2].replace(" ","_").replace("@","_")),
+
 					#notification
-					"title":"Pesan dari {}".format(self.sender_full_name),
+					"title":"{} - Pesan dari {}".format(self.reference_name,driverName),
 					"body":"{}".format(self.content),
 
 					#data

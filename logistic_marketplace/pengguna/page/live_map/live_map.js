@@ -58,7 +58,7 @@ LiveMap = Class.extend({
 			principle_ro=1
 		}
 		var vendor_ro=0
-		if (frappe.defaults.get_user_default("vendor")){
+		if (frappe.defaults.get_user_default("vendor")&&principle_ro==0){
 			vendor_ro=1
 		}
 		this.elements = {
@@ -84,7 +84,7 @@ LiveMap = Class.extend({
 					me.get_data();
 			}, "fa fa-refresh")
 		};
-		if (vendor_ro==1){
+		//if (vendor_ro==1){
 			this.elements.driver=wrapper.page.add_field({
 			"fieldname":"driver",
 			"label": __("Driver"),
@@ -93,12 +93,13 @@ LiveMap = Class.extend({
 			}).$wrapper.find("input");
 			this.elements.driver_status=wrapper.page.add_field({
 			"fieldname":"driver_status",
+			"read_only":vendor_ro,
 			"label": __("Status"),
 			"fieldtype": "Select",
 			"options": "All\nIdle\nOn Duty",
 			"default":"All"
 			}).$wrapper.find("input");
-		}
+		//}
 		// this.elements.refresh_btn.on("click", function() {
 		// 	me.get_data(this);
 		// });

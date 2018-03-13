@@ -28,7 +28,7 @@ class Driver(Document):
 			"roles":roles_to_apply
 			})
 
-		gg.insert()
+		gg.insert(ignore_permissions=True)
 		#_update_password(self.email,password)
 		perm = frappe.get_doc({
 			"doctype": "User Permission",
@@ -37,7 +37,7 @@ class Driver(Document):
 			"for_value":self.vendor,
 			"apply_for_all_roles":1
 			})
-		perm.insert()
+		perm.insert(ignore_permissions=True)
 		perm = frappe.get_doc({
 			"doctype": "User Permission",
 			"user":self.email,
@@ -45,5 +45,5 @@ class Driver(Document):
 			"for_value":self.name,
 			"apply_for_all_roles":1
 			})
-		perm.insert()
+		perm.insert(ignore_permissions=True)
 
