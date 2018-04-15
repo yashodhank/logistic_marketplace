@@ -7,6 +7,5 @@ frappe.ui.form.on('Job Order', {
 	},
 	onload:function(frm) {
 		//frm.function.update_detail();
-		console.log('testing')
 	}
 });
