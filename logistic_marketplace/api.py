@@ -10,7 +10,6 @@ import os
 @frappe.whitelist(allow_guest=False)
 def get_route(startjou='', endjou='',driver=''):
 	data = frappe.db.sql("SELECT lo, lat, creation FROM `tabDriver Background Update` WHERE creation >= (SELECT creation FROM `tabJob Order Update` WHERE name='{}') AND creation <= (SELECT creation FROM `tabJob Order Update` WHERE name='{}') AND driver = '{}' AND lo != '0.0' AND lat != '0.0' AND lo != '' AND lat != '' GROUP BY lo * lat ORDER BY creation ASC;".format(startjou,endjou,driver),as_dict=1)
-
 	return data
 
 @frappe.whitelist(allow_guest=False)
