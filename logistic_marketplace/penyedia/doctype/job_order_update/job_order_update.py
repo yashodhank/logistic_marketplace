@@ -14,16 +14,20 @@ class JobOrderUpdate(Document):
 			jo = frappe.get_doc("Job Order",self.job_order)
 			jo.status="Selesai"
 			jo.save()
-			s = get_request_session()
-			url = "https://fcm.googleapis.com/fcm/send"
-			header = {"Authorization": "key=AAAA66ppyJE:APA91bFDQd8klnCXe-PTgLUkUD7x4p9UAxW91NbqeTN9nbX7-GmJMlsnQ2adDd84-rl6LqKnD7KLSeM9xBmADnPuRh0YadoQKux7IrZ27tsjVzvzlFDoXuOnZRP7eXrf0k51QGGifLGw","Content-Type": "application/json"}
 
-			content = {"to":"/topics/{}".format(self.principle.replace(" ","_")) , "notification":{"title":self.job_order,"body":"Telah Selesai Oleh {}".format(self.vendor),"sound":"default"}, "data":{"job_order":self.job_order}}
-			s.post(url=url,headers=header,data=json.dumps(content))
-			header = {"Authorization": "key=AAAA7ndto_Q:APA91bHVikGANVsFaK2UEKLVXQEA1cleaeM7DlLLuaA87jEVhBGNTe4t8fi0h5Ttc7jRkoiEkZYlrw7Idsn9S9ZfDFtl1S3H3j21Xs8VXtANCDjycLLkMAyLLdHKaBfi3NYc3Z8VIxo8","Content-Type": "application/json"}
+			data = frappe.db.sql("select * from `tabJob Order` where name='{}'".format(self.job_order),as_dict=1)
+			if (len(data) > 0):
+				dataJO = data[0]
+				s = get_request_session()
+				url = "https://fcm.googleapis.com/fcm/send"
+				header = {"Authorization": "key=AAAA66ppyJE:APA91bFDQd8klnCXe-PTgLUkUD7x4p9UAxW91NbqeTN9nbX7-GmJMlsnQ2adDd84-rl6LqKnD7KLSeM9xBmADnPuRh0YadoQKux7IrZ27tsjVzvzlFDoXuOnZRP7eXrf0k51QGGifLGw","Content-Type": "application/json"}
 
-			content = {"to":"/topics/{}".format(self.vendor.replace(" ","_")) , "notification":{"title":self.job_order,"body":"Telah Selesai","sound":"default"}, "data":{"job_order":self.job_order}}
-			s.post(url=url,headers=header,data=json.dumps(content))
+				content = {"to":"/topics/{}".format(self.principle.replace(" ","_")) , "notification":{"title":"{} <{}>".format(self.job_order, dataJO['reference']),"body":"Telah Selesai Oleh {}".format(self.vendor),"sound":"default"}, "data":{"job_order":self.job_order}}
+				s.post(url=url,headers=header,data=json.dumps(content))
+				header = {"Authorization": "key=AAAA7ndto_Q:APA91bHVikGANVsFaK2UEKLVXQEA1cleaeM7DlLLuaA87jEVhBGNTe4t8fi0h5Ttc7jRkoiEkZYlrw7Idsn9S9ZfDFtl1S3H3j21Xs8VXtANCDjycLLkMAyLLdHKaBfi3NYc3Z8VIxo8","Content-Type": "application/json"}
+
+				content = {"to":"/topics/{}".format(self.vendor.replace(" ","_")) , "notification":{"title":"{} <{}>".format(self.job_order, dataJO['reference']),"body":"Telah Selesai","sound":"default"}, "data":{"job_order":self.job_order}}
+				s.post(url=url,headers=header,data=json.dumps(content))
 			
 
 			

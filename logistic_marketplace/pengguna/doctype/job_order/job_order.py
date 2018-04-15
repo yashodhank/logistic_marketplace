@@ -49,6 +49,7 @@ class JobOrder(Document):
 			found = "Tersedia"
 			for row in data:
 				found="Tidak Tersedia"
+			frappe.db.sql("""update `tabDriver` set status="{}" where name="{}" """.format(found,self.driver),as_list=1)		
 			if self.status=="Dalam Proses":
 				s = get_request_session()
 				url = "https://fcm.googleapis.com/fcm/send"
@@ -60,7 +61,7 @@ class JobOrder(Document):
 							"subject":"{}".format(self.driver.replace(" ","_").replace("@","_")),
 
 							#notification
-							"title":self.name,
+							"title":"{} <{}>".format(self.name,self.reference),
 							"body":"Job Order {} di tugaskan".format(self.vendor),
 
 							#data
@@ -69,8 +70,7 @@ class JobOrder(Document):
 						}
 				}
 				s.post(url=url,headers=header,data=json.dumps(content))
-
-			frappe.db.sql("""update `tabDriver` set status="{}" where name="{}" """.format(found,self.driver),as_list=1)
+			
 		if self.status=="Di Tolak":			
 			s = get_request_session()
 			url = "https://fcm.googleapis.com/fcm/send"
@@ -82,7 +82,7 @@ class JobOrder(Document):
 						"subject":"{}".format(self.principle.replace(" ","_").replace("@","")),
 
 						#notification
-						"title":self.name,
+						"title":"{} <{}>".format(self.name,self.reference),
 						"body":"Job Order {} di tolak oleh {}".format(self.name,self.vendor),
 
 						#data
@@ -94,6 +94,14 @@ class JobOrder(Document):
 
 			#frappe.db.sql("""update `tabDriver` set status="{}" where name="{}" """.format(found,self.driver),as_list=1)
 			#frappe.msgprint("updated")
+
+	def on_cancel(self):
+		data  = frappe.db.sql("""select driver from `tabJob Order` where driver="{}" and status = "Dalam Proses" and name != "{}" """.format(self.driver,self.name),as_list=1)
+		status = "Tersedia"
+		if (len(data) > 0):
+			status = "Tidak Tersedia"
+		frappe.db.sql("""update `tabDriver` set status="{}" where name="{}" """.format(status, self.driver),as_list=1)
+
 	def validate(self):
 		if self.truck and self.strict==1:
 			if self.truck_type!=self.suggest_truck_type:
@@ -118,7 +126,7 @@ class JobOrder(Document):
 						"subject":"{}".format(self.vendor.replace(" ","_")),
 
 						#notification
-						"title":self.name,
+						"title":"{} <{}>".format(self.name,self.reference),
 						"body":msg,
 
 						#data

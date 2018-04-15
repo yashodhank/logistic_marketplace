@@ -163,6 +163,9 @@ LiveMap = Class.extend({
 		infoWindowContent = [];
 		for (var row in data){
 			info = data[row];
+			if (info.lat==0 && info.lo==0){
+				continue;
+			}
 			markers.push([info.job_order,info.lat,info.lo]);
 			infoWindowContent.push(['<div class="info_content">' +
 				'<h3>'+ info.job_order+'</h3>' +
