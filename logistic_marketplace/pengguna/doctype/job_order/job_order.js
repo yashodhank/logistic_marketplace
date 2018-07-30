@@ -2,6 +2,7 @@
 // For license information, please see license.txt
 
 var mapScript = document.createElement("script")
+if(cur_frm.doc.docstatus==1){
 mapScript.type = "text/javascript"
 mapScript.text = "function initMap(){\n    var map = new google.maps.Map(document.getElementById('map'), {\n      zoom: 9,\n      center: {lat: -6.211712, lng: 106.844781},\n      mapTypeId: 'terrain'\n    });\n    console.log('map loaded')\n    console.log(map)\n}"
 document.head.appendChild(mapScript)
@@ -17,7 +18,7 @@ script.onload = function(){
 document.head.appendChild(script);
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
-
+}
 function isEmpty(obj) {
 
     // null and undefined are "empty"
@@ -155,6 +156,7 @@ function getRoute(jobOrderUpdate,startjou,endjou,driver) {
 
 frappe.ui.form.on('Job Order', {
 	refresh: function(frm) {
+		if(frm.doc.docstatus==1){
 		cur_frm.set_value('track_history','<div id="loading-indicator">Loading...</div><div id="map"></div>')
 		current_name = (frm.docname)
 		driver = frm.doc.driver
@@ -171,6 +173,7 @@ frappe.ui.form.on('Job Order', {
 		    	refreshMap(r)
 		    }
 		})
+		}
 	},
 	onload:function(frm) {
 		

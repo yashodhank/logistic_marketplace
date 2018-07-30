@@ -55,10 +55,10 @@ class JobOrder(Document):
 				url = "https://fcm.googleapis.com/fcm/send"
 				header = {"Authorization": "key=AAAAnuCvOxY:APA91bGdCn20mHlHrWEpGiNsiSmb36HEG0QmZ-L7U_iG8eOjm9btCFUgYn8klNStKetvEA1eFdiEmaopdScVk-jv_HNvnLwq4m1VI8LdrIueh9NFI6p5hVjdxs73THqvcRFQ8tZjtv61","Content-Type": "application/json"}
 				content = {
-					"to":"/topics/{}".format(self.driver.replace(" ","_").replace("@","_")),
+					"to":"/topics/{}".format(self.driver.replace(" ","_").replace("-","_").replace("(","").replace(")","").replace(".", "_").replace("@", "_")),
 					"data": 
 						{
-							"subject":"{}".format(self.driver.replace(" ","_").replace("@","_")),
+							"subject":"{}".format(self.driver.replace(" ","_").replace("-","_").replace("(","").replace(")","").replace(".", "_").replace("@", "_")),
 
 							#notification
 							"title":"{} <{}>".format(self.name,self.reference),
@@ -242,10 +242,10 @@ def chat(self, method):
 		url = "https://fcm.googleapis.com/fcm/send"
 		header = {"Authorization": "key=AAAAnuCvOxY:APA91bGdCn20mHlHrWEpGiNsiSmb36HEG0QmZ-L7U_iG8eOjm9btCFUgYn8klNStKetvEA1eFdiEmaopdScVk-jv_HNvnLwq4m1VI8LdrIueh9NFI6p5hVjdxs73THqvcRFQ8tZjtv61","Content-Type": "application/json"}
 		content = {
-			"to":"/topics/{}".format(users[2].replace(" ","_").replace("@","_")),
+			"to":"/topics/{}".format(users[2].replace(" ","_").replace("-","_").replace("(","").replace(")","").replace(".", "_").replace("@", "_")),
 			"data": 
 				{
-					"subject":"{}".format(users[2].replace(" ","_").replace("@","_")),
+					"subject":"{}".format(users[2].replace(" ","_").replace("-","_").replace("(","").replace(")","").replace(".", "_").replace("@", "_")),
 
 					#notification
 					"title":"{} - Pesan dari {}".format(self.reference_name,driverName),

@@ -5,7 +5,6 @@ import time
 import datetime
 import os
 
-
 #JOB ORDER
 @frappe.whitelist(allow_guest=False)
 def get_route(startjou='', endjou='',driver=''):
@@ -71,8 +70,6 @@ def get_image_jo_update(jod_name=''):
 	return request_attachments
 
 
-
-
 @frappe.whitelist(allow_guest=False)
 def get_job_order_by(name=''):
 	data = frappe.db.sql("SELECT * FROM `tabJob Order` WHERE name='{}' ORDER BY modified DESC LIMIT 1".format(name),as_dict=1)
@@ -111,6 +108,7 @@ def get_job_order_count(role='',id=''):
 	data = dict()
 	for stat in status:
 		data[stat] = frappe.db.sql("SELECT COUNT(name) as count FROM `tabJob Order` WHERE {}='{}' AND docstatus = 1 AND status='{}' ORDER BY modified".format(role,id,stat),as_dict=1)[0]
+		data['query_'+stat] = "SELECT COUNT(name) as count FROM `tabJob Order` WHERE {}='{}' AND docstatus = 1 AND status='{}' ORDER BY modified".format(role,id,stat)
 	return data
 
 #DRIVER
@@ -161,6 +159,25 @@ def get_user(principle='',vendor='',driver=''):
 def validate_email(email=''):
 	data = frappe.db.sql("SELECT full_name FROM `tabUser` WHERE email = '{}'".format(email), as_dict=True)
 	return data
+
+@frappe.whitelist(allow_guest=True)
+def get_firebase_id(role):
+	data = dict()
+	if role == 'Driver':
+		data['for_value'] = frappe.db.sql("SELECT name as user FROM `tabDriver` WHERE name = '{}'".format(frappe.session.user),as_dict=1)
+		for d in data['for_value']:
+			d['firebase_topic'] = d['user'].replace(" ","_").replace("-","_").replace("(","").replace(")","").replace(".", "_").replace("@", "_")
+	else:
+		data['for_value'] = frappe.db.sql("SELECT for_value as user FROM `tabUser Permission` WHERE allow='{}' AND user='{}'".format(role, frappe.session.user),as_dict=1)
+		for d in data['for_value']:
+			d['firebase_topic'] = d['user'].replace(" ","_").replace("-","_").replace("(","").replace(")","").replace(".", "_").replace("@", "_")
+
+	data_user = frappe.db.sql("SELECT name FROM `tab{}` WHERE email = '{}'".format(role,frappe.session.user),as_dict=1)
+	if len(data_user) > 0:
+		data['role'] = "valid"
+	else:
+		data['role'] = "invalid"
+	return data	
 
 @frappe.whitelist(allow_guest=True)
 def write_log(errorCode='',log=''):
